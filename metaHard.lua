@@ -1,4 +1,4 @@
-—- protocol: batchsize, inputPlane, outputPlane, kernelWidth, kernelHeight, inputWidth, inputHeight, strideWidth, strideHeight, Output, Input, Gradacc. 
+-- protocol: batchsize, inputPlane, outputPlane, kernelWidth, kernelHeight, inputWidth, inputHeight, strideWidth, strideHeight, Output, Input, Gradacc. 
 metaHard = {}
 
 require 'nn'
@@ -11,17 +11,17 @@ cudnn.verbose = false
 require 'fbcunn'
 -- require 'nnbhwd'
 
-local SpatialConvolutionMetaFFT, parent = torch.class('nn.SpatialConvolutionMetaFFT', 'nn.Module')
+local SpatialConvolutionMetaHard, parent = torch.class('nn.SpatialConvolutionMetaHard', 'nn.Module')
 
 
-function SpatialConvolutionMetaFFT:writefile(filename, info)
-	local wfile=io.open(filename, "w+”)
+function writefile(filename, info)
+	local wfile=io.open(filename, "a")
 	assert(wfile)
 	wfile:write(info)
 	wfile:close()
 end
 
-function SpatialConvolutionMetaFFT:__init(nInputPlane, nOutputPlane,
+function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
    parent.__init(self)
    ni = nInputPlane
@@ -105,8 +105,8 @@ function SpatialConvolutionMetaFFT:__init(nInputPlane, nOutputPlane,
    self.playOutput = mods[outMod]
    self.playGradInput = mods[gradInputMod]
    self.playGradPara = mods[gradParaMod]
-   local str = string.format(“%6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f %6.0f”, bs, ni, no, kw, kh, dw, dh, outMod, gradInputMod, gradParaMod)
-   writefile(“data”, str)
+   local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
+   writefile("data", str)
 end
 
 function transposeInput(typename, input)
@@ -117,25 +117,25 @@ function transposeInput(typename, input)
    end
 end
 
-function SpatialConvolutionMetaFFT:updateOutput(input)
+function SpatialConvolutionMetaHard:updateOutput(input)
    -- print(self.playOutput)
    transposeInput(self.playOutput, input)
    return self.playOutput:updateOutput(input)
 end
 
-function SpatialConvolutionMetaFFT:updateGradInput(input, gradOutput)
+function SpatialConvolutionMetaHard:updateGradInput(input, gradOutput)
    -- print(self.playGradInput)
    transposeInput(self.playGradInput, input)
    return self.playGradInput:updateGradInput(input, gradOutput)
 end
 
-function SpatialConvolutionMetaFFT:accGradParameters(input, gradOutput)
+function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
    -- print(self.playGradPara)
    transposeInput(self.playGradPara, input)
    return self.playGradPara:accGradParameters(input, gradOutput)
 end
 
-function SpatialConvolutionMetaFFT:reset()
+function SpatialConvolutionMetaHard:reset()
    self.play:reset()
 end
 
