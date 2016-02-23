@@ -46,6 +46,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       outMod = outR
       gradInputMod = gradInputR
       gradParaMod = gradParaR
+      if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' || torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT'
+         i1 = torch.randn(bs, ni, ih, iw):cuda();
+         nn.SpatialConvolutionCuFFT:forward(i1)
+      end
    else
       print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       timeOut = {}
@@ -111,7 +115,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
             gradParaMod = j
          end
       end
-      local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
+      local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d\n", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
       writefile("data", str)
    end
    self.playOutput = mods[outMod]
