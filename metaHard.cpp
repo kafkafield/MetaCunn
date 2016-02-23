@@ -42,6 +42,11 @@ struct cmp_func {
     }  
 };
 
+extern "C" {
+	static int loadmap_c(lua_State* L);
+	int luaopen_metahard(lua_State *L);
+}
+
 outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
 {
 	unordered_map<inputSize, outputSize, hash_func, cmp_func> loadFile;
@@ -96,7 +101,7 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 }
 
 
-extern "C" static int loadmap_c(lua_State* L)
+static int loadmap_c(lua_State* L)
 {
 	int bs = lua_tonumber(L, 1);
 	int ni = lua_tonumber(L, 2);
@@ -118,7 +123,7 @@ const luaL_Reg functions[] = {
   {"loadmap", loadmap_c},
 };
 
-extern "C" int luaopen_metahard(lua_State *L)
+int luaopen_metahard(lua_State *L)
 {
     luaL_register(L,"metahard",functions);
     return 1;
