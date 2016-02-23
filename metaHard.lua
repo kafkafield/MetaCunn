@@ -39,7 +39,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
    mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
-   outR, gradInputR, gradParaModR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
+   outR, gradInputR, gradParaR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
 
    local outMod, gradInputMod, gradParaMod
    if outR > 0 then
