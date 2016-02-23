@@ -46,7 +46,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       outMod = outR
       gradInputMod = gradInputR
       gradParaMod = gradParaR
-      if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' || torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT'
+      if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT'
          i1 = torch.randn(bs, ni, ih, iw):cuda();
          nn.SpatialConvolutionCuFFT:forward(i1)
       end
