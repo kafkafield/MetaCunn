@@ -1,3 +1,4 @@
+require("metahard")
 arg1,arg2,arg3=loadmap(128,3,96,11,11,128,128,1,1)
 print(arg1, arg2, arg3)
 arg1,arg2,arg3=loadmap(128,64,128,9,9,64,64,1,1)
