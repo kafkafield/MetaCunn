@@ -102,9 +102,9 @@ const luaL_Reg functions[] = {
   {"loadmap", loadmap},
 };
 
-int luaopen_metahard(lua_State *L)
+extern "C" int luaopen_metahard(lua_State *L)
 {
-    luaL_register(L,"metahard",lib);
+    luaL_register(L,"metahard",functions);
     return 1;
 }
 /*
