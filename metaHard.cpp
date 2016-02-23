@@ -121,11 +121,13 @@ static int loadmap_c(lua_State* L)
 
 const luaL_Reg functions[] = {
   {"loadmap", loadmap_c},
+  {NULL,  NULL},
 };
 
 int luaopen_metahard(lua_State *L)
 {
     luaL_register(L,"metahard",functions);
+    lua_pop(L, 1);
     return 1;
 }
 /*
