@@ -48,7 +48,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       gradParaMod = gradParaR
       if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT' then
          i1 = torch.randn(bs, ni, ih, iw):cuda()
-         nn.SpatialConvolutionCuFFT:forward(i1)
+         collectgarbage()
+         mods[4]:forward(i1)
+         cutorch.synchronize()
+         collectgarbage()
       end
    else
       print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
