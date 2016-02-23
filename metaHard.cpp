@@ -62,18 +62,19 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 	{
 		string line;
 		file.getline(line, 100);
-		line >> tempi.bs;
-		line >> tempi.ni;
-		line >> tempi.no;
-		line >> tempi.kw;
-		line >> tempi.kh;
-		line >> tempi.iw;
-		line >> tempi.ih;
-		line >> tempi.dw;
-		line >> tempi.hd;
-		line >> tempo.outMod;
-		line >> tempo.gradInputMod;
-		line >> tempo.gradParaMod;
+		istringstream iss(line);
+		iss >> tempi.bs;
+		iss >> tempi.ni;
+		iss >> tempi.no;
+		iss >> tempi.kw;
+		iss >> tempi.kh;
+		iss >> tempi.iw;
+		iss >> tempi.ih;
+		iss >> tempi.dw;
+		iss >> tempi.hd;
+		iss >> tempo.outMod;
+		iss >> tempo.gradInputMod;
+		iss >> tempo.gradParaMod;
 		loadFile[tempi] = tempo; 
 	}
 	inputSize targeti;
@@ -87,7 +88,7 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 	targeti.ih = ih;
 	targeti.dw = dw;
 	targeti.dh = dh;
-	unordered_map<inputSize, outputSize, hash, cmp>::iterator got = loadFile.find(targeti);
+	auto got = loadFile.find(targeti);
 	if(got == loadFile.end())
 	{
 		targeto.outMod = targeto.gradInputMod = targeto.gradParaMod = 0;
