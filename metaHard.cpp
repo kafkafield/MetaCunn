@@ -27,7 +27,7 @@ struct outputSize {
 	int gradParaMod;
 	void print()
 	{
-		cout << outMod << " " << gradInputMod << " " << gradParaMod << endl;
+		std:cout << outMod << " " << gradInputMod << " " << gradParaMod << std:endl;
 	}
 };
 
