@@ -44,7 +44,7 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 	if(! file.is_open())
 	{
 		cout << "Error opening file. " << endl;
-		return;
+		exit(1);
 	}
 	inputSize tempi;
 	outputSize tempo;
@@ -60,7 +60,7 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 		iss >> tempi.iw;
 		iss >> tempi.ih;
 		iss >> tempi.dw;
-		iss >> tempi.hd;
+		iss >> tempi.dh;
 		iss >> tempo.outMod;
 		iss >> tempo.gradInputMod;
 		iss >> tempo.gradParaMod;
@@ -94,7 +94,7 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 int main() // for test
 {
 	loadmap(128,3,96,11,11,128,128,1,1).print();
-	loadmap(128,64,128,9,9,64,64,1,1,1).print();
+	loadmap(128,64,128,9,9,64,64,1,1).print();
 	loadmap(128,128,128,9,9,32,32,1,1).print();
 	loadmap(128,128,128,7,7,16,16,1,1).print();
 	loadmap(128,384,384,3,3,13,13,1,1).print();
