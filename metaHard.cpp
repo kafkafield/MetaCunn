@@ -4,7 +4,15 @@
 #include <sstream>
 #include <iostream>
 
+extern "C" {
+	#include "lua.h"
+	#include "lualib.h"
+	#include "lauxlib.h"
+}
+
 using namespace std;
+
+lua_State* L;
 
 struct inputSize {
 	int bs; int ni; int no; int kw; int kh; int iw; int ih; int dw; int dh;
@@ -37,7 +45,7 @@ struct cmp_func {
     }  
 };
 
-outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
+static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
 {
 	unordered_map<inputSize, outputSize, hash_func, cmp_func> loadFile;
 	ifstream file("data");
@@ -68,15 +76,15 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 	}
 	inputSize targeti;
 	outputSize targeto;
-	targeti.bs = bs;
-	targeti.ni = ni;
-	targeti.no = no;
-	targeti.kw = kw;
-	targeti.kh = kh;
-	targeti.iw = iw;
-	targeti.ih = ih;
-	targeti.dw = dw;
-	targeti.dh = dh;
+	targeti.bs = lua_tonumber(L, 1);
+	targeti.ni = lua_tonumber(L, 2);
+	targeti.no = lua_tonumber(L, 3);
+	targeti.kw = lua_tonumber(L, 4);
+	targeti.kh = lua_tonumber(L, 5);
+	targeti.iw = lua_tonumber(L, 6);
+	targeti.ih = lua_tonumber(L, 7);
+	targeti.dw = lua_tonumber(L, 8);
+	targeti.dh = lua_tonumber(L, 9);
 	auto got = loadFile.find(targeti);
 	if(got == loadFile.end())
 	{
@@ -87,16 +95,32 @@ outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int d
 		targeto = got->second;
 	}
 	file.close();
-	return targeto;
+	lua_pushnumber(L, targeto.outMod);
+	lua_pushnumber(L, targeto.gradInputMod);
+	lua_pushnumber(L, targeto.gradParaMod);
+	return 3;
 }
 
 
 int main() // for test
 {
-	loadmap(128,3,96,11,11,128,128,1,1).print();
-	loadmap(128,64,128,9,9,64,64,1,1).print();
-	loadmap(128,128,128,9,9,32,32,1,1).print();
-	loadmap(128,128,128,7,7,16,16,1,1).print();
-	loadmap(128,384,384,3,3,13,13,1,1).print();
+	/* initialize Lua */
+	L = lua_open();
+
+	/* load Lua base libraries */
+	luaL_openlibs(L);
+
+	/* register our function */
+	lua_register(L, "loadmap", average);
+
+	/* run the script */
+	luaL_dofile(L, "loadmaptest.lua");
+
+	/* cleanup Lua */
+	lua_close(L);
+
+	/* pause */
+	printf( "Press enter to exit..." );
+	getchar();
 	return 0;
 }
