@@ -5,7 +5,13 @@
 #include <iostream>
 
 #include <luaT.h>
-#include <lua.hpp>
+#include <lua.hpp> 
+
+extern "C" {
+	#include "lua.h"
+	#include "lualib.h"
+	#include "lauxlib.h"
+}
 
 using namespace std;
 
