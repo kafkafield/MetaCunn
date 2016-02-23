@@ -47,6 +47,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       gradInputMod = gradInputR
       gradParaMod = gradParaR
    else
+      print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       timeOut = {}
       timeGradInput = {}
       timeGradPara = {}
