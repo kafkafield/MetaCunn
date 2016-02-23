@@ -7,12 +7,6 @@
 #include <luaT.h>
 #include <lua.hpp> 
 
-extern "C" {
-	#include "lua.h"
-	#include "lualib.h"
-	#include "lauxlib.h"
-}
-
 using namespace std;
 
 lua_State* L;
@@ -48,7 +42,7 @@ struct cmp_func {
     }  
 };
 
-static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
+outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
 {
 	unordered_map<inputSize, outputSize, hash_func, cmp_func> loadFile;
 	ifstream file("data");
@@ -79,15 +73,15 @@ static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int i
 	}
 	inputSize targeti;
 	outputSize targeto;
-	targeti.bs = lua_tonumber(L, 1);
-	targeti.ni = lua_tonumber(L, 2);
-	targeti.no = lua_tonumber(L, 3);
-	targeti.kw = lua_tonumber(L, 4);
-	targeti.kh = lua_tonumber(L, 5);
-	targeti.iw = lua_tonumber(L, 6);
-	targeti.ih = lua_tonumber(L, 7);
-	targeti.dw = lua_tonumber(L, 8);
-	targeti.dh = lua_tonumber(L, 9);
+	targeti.bs = bs;
+	targeti.ni = ni;
+	targeti.no = no;
+	targeti.kw = kw;
+	targeti.kh = kh;
+	targeti.iw = iw;
+	targeti.ih = ih;
+	targeti.dw = dw;
+	targeti.dh = dh;
 	auto got = loadFile.find(targeti);
 	if(got == loadFile.end())
 	{
@@ -98,6 +92,22 @@ static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int i
 		targeto = got->second;
 	}
 	file.close();
+	return targeto;
+}
+
+
+extern "C" static int loadmap_c(lua_State* L)
+{
+	int bs = lua_tonumber(L, 1);
+	int ni = lua_tonumber(L, 2);
+	int no = lua_tonumber(L, 3);
+	int kw = lua_tonumber(L, 4);
+	int kh = lua_tonumber(L, 5);
+	int iw = lua_tonumber(L, 6);
+	int ih = lua_tonumber(L, 7);
+	int dw = lua_tonumber(L, 8);
+	int dh = lua_tonumber(L, 9);
+	outputSize targeto = loadmap(bs, ni, no, kw, kh, iw, ih, dw, dh);
 	lua_pushnumber(L, targeto.outMod);
 	lua_pushnumber(L, targeto.gradInputMod);
 	lua_pushnumber(L, targeto.gradParaMod);
@@ -105,7 +115,7 @@ static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int i
 }
 
 const luaL_Reg functions[] = {
-  {"loadmap", loadmap},
+  {"loadmap", loadmap_c},
 };
 
 extern "C" int luaopen_metahard(lua_State *L)
