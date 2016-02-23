@@ -4,11 +4,8 @@
 #include <sstream>
 #include <iostream>
 
-extern "C" {
-	#include "lua.h"
-	#include "lualib.h"
-	#include "lauxlib.h"
-}
+#include <luaT.h>
+#include <lua.hpp>
 
 using namespace std;
 
@@ -101,26 +98,36 @@ static int loadmap(lua_State* L)//(int bs, int ni, int no, int kw, int kh, int i
 	return 3;
 }
 
+const luaL_Reg functions[] = {
+  {"loadmap", loadmap},
+};
 
+int luaopen_metahard(lua_State *L)
+{
+    luaL_register(L,"metahard",lib);
+    return 1;
+}
+/*
 int main() // for test
 {
-	/* initialize Lua */
+	/* initialize Lua *
 	L = lua_open();
 
-	/* load Lua base libraries */
+	/* load Lua base libraries *
 	luaL_openlibs(L);
 
-	/* register our function */
+	/* register our function *
 	lua_register(L, "loadmap", average);
 
-	/* run the script */
+	/* run the script *
 	luaL_dofile(L, "loadmaptest.lua");
 
-	/* cleanup Lua */
+	/* cleanup Lua *
 	lua_close(L);
 
-	/* pause */
+	/* pause *
 	printf( "Press enter to exit..." );
 	getchar();
 	return 0;
 }
+*/
