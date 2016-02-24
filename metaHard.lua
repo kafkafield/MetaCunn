@@ -108,7 +108,8 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
             ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
          end
          cutorch.synchronize()
-         timeGradPara[j] = sys.toc()/stepsos.execute('pgrep nvidia-smi | xargs kill -s 9')
+         timeGradPara[j] = sys.toc()/steps
+         os.execute('pgrep nvidia-smi | xargs kill -s 9')
          memGradPara[j] = metahard.getMaxMemory()
          print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
