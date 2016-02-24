@@ -44,7 +44,8 @@ struct cmp_func {
 
 extern "C" {
 	static int loadmap_c(lua_State* L);
-	int luaopen_metahard(lua_State *L);
+	static int findmax_c(lua_State* L);
+	int luaopen_metahard(lua_State* L);
 }
 
 outputSize loadmap(int bs, int ni, int no, int kw, int kh, int iw, int ih, int dw, int dh)
@@ -119,8 +120,32 @@ static int loadmap_c(lua_State* L)
 	return 3;
 }
 
+int findmax()
+{
+	int max = 0;
+	int temp;
+	string line;
+	ifstream file("heihei");
+	getline(file, line);
+	while(getline(file, line))
+	{
+		istringstream iss(line);
+		iss >> temp;
+		if(temp > max)
+			max = temp;
+	}
+	return max;
+}
+
+static int findmax_c(lua_State* L)
+{
+	luapushnumber(L, findmax());
+	return 1;
+}
+
 const luaL_Reg functions[] = {
   {"loadmap", loadmap_c},
+  {"getMaxMemory", findmax_c},
   {NULL,  NULL},
 };
 

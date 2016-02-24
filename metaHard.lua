@@ -35,10 +35,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    iw = iW
    bs = bS
    mods = {}
-   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
-   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
-   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh)-- :cuda()
+   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh)-- :cuda()
+   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4)-- :cuda()
+   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh)-- :cuda()
    outR, gradInputR, gradParaR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
 
    local outMod, gradInputMod, gradParaMod
@@ -59,10 +59,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       timeGradInput = {}
       timeGradPara = {}
       local steps = 3
-
-      os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
       
       for j=1,#mods do
+         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
+         mods[j] = mods[j]:cuda()
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
             i1 = torch.randn(ni, ih, iw, bs):cuda();
@@ -100,9 +100,11 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          timeGradPara[j] = sys.toc()/steps
 
          collectgarbage()
+         os.execute('pgrep nvidia-smi | xargs kill -s 9')
+         memUse = getMaxMemory()
+         print(memUse)
       end
 
-      os.execute('pgrep nvidia-smi | xargs kill -s 9')
 
       local outMin = 100000
       local gradInputMin = 100000
