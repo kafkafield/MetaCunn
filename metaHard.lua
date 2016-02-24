@@ -60,7 +60,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       timeGradPara = {}
       local steps = 3
       for j=1,#mods do
-
+         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
             i1 = torch.randn(ni, ih, iw, bs):cuda();
@@ -98,6 +98,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          timeGradPara[j] = sys.toc()/steps
 
          collectgarbage()
+         os.execute('pgrep nvidia-smi | xargs kill -s 9')
 
       end
 
