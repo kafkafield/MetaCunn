@@ -144,7 +144,7 @@ int findmax()
 
 static int findmax_c(lua_State* L)
 {
-	luapushnumber(L, findmax());
+	lua_pushnumber(L, findmax());
 	return 1;
 }
 
