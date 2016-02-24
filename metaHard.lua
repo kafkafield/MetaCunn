@@ -101,7 +101,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
 
          collectgarbage()
          os.execute('pgrep nvidia-smi | xargs kill -s 9')
-         memUse = getMaxMemory()
+         memUse = metahard.getMaxMemory()
          print(memUse)
       end
 

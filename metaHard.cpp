@@ -126,6 +126,11 @@ int findmax()
 	int temp;
 	string line;
 	ifstream file("heihei");
+	if(! file.is_open())
+	{
+		cout << "Error opening file. " << endl;
+		exit(1);
+	}
 	getline(file, line);
 	while(getline(file, line))
 	{
