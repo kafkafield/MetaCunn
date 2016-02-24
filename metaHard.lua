@@ -35,10 +35,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    iw = iW
    bs = bS
    mods = {}
-   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh)-- :cuda()
-   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh)-- :cuda()
-   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4)-- :cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh)-- :cuda()
+   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh) :cuda()
+   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
+   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    outR, gradInputR, gradParaR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
 
    local outMod, gradInputMod, gradParaMod
@@ -46,9 +46,6 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       outMod = outR
       gradInputMod = gradInputR
       gradParaMod = gradParaR
-      mods[outMod] = mods[outMod]:cuda()
-      mods[gradInputMod] = mods[gradInputMod]:cuda()
-      mods[gradParaMod] = mods[gradParaMod]:cuda()
       if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT' then
          i1 = torch.randn(bs, ni, ih, iw):cuda()
          collectgarbage()
@@ -61,11 +58,12 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       timeOut = {}
       timeGradInput = {}
       timeGradPara = {}
+      memOut = {}
+      memGradInput = {}
+      memGradPara = {}
       local steps = 3
       
       for j=1,#mods do
-         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
-         mods[j] = mods[j]:cuda()
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
             i1 = torch.randn(ni, ih, iw, bs):cuda();
@@ -75,6 +73,8 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          collectgarbage()
          local o1 = mods[j]:forward(i1)
          cutorch.synchronize()
+
+         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          collectgarbage()
          sys.tic()
          for t = 1,steps do
@@ -82,16 +82,24 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          end
          cutorch.synchronize()
          timeOut[j] = sys.toc()/steps
+         os.execute('pgrep nvidia-smi | xargs kill -s 9')
+         memOut[j] = metahard.getMaxMemory()
+         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateOutput():', memOut[j]))
 
+         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          cutorch.synchronize()
          collectgarbage()
          sys.tic()
          for t = 1,steps do
             mods[j]:updateGradInput(i1, o1)
          end
-         cutorch.synchronize()
          timeGradInput[j] = sys.toc()/steps
+         cutorch.synchronize()
+         os.execute('pgrep nvidia-smi | xargs kill -s 9')
+         memGradInput[j] = metahard.getMaxMemory()
+         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateGradInput():', memGradInput[j]))
 
+         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          cutorch.synchronize()
          collectgarbage()
          sys.tic()
@@ -100,12 +108,11 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
             ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
          end
          cutorch.synchronize()
-         timeGradPara[j] = sys.toc()/steps
+         timeGradPara[j] = sys.toc()/stepsos.execute('pgrep nvidia-smi | xargs kill -s 9')
+         memGradPara[j] = metahard.getMaxMemory()
+         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
          collectgarbage()
-         os.execute('pgrep nvidia-smi | xargs kill -s 9')
-         memUse = metahard.getMaxMemory()
-         print(memUse)
       end
 
 
