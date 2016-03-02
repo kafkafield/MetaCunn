@@ -61,7 +61,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       memOut = {}
       memGradInput = {}
       memGradPara = {}
-      local steps = 3
+      local steps = 1
       
       for j=1,#mods do
          collectgarbage()
