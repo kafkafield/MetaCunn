@@ -116,7 +116,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
          collectgarbage()
-         mod[j]:float()
+         mods[j]:float()
       end
 
 
