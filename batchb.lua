@@ -41,7 +41,7 @@ for i,run in ipairs(runs) do
    print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
    local mods = {}
    --mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
-   mods[1] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
+   mods[1] = nn.SpatialConvolutionMetaHard(ni,no,kw,kh,dw,dh,iw,ih,bs):cuda()
    --mods[1] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
    -- mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
