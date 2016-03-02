@@ -84,7 +84,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          timeOut[j] = sys.toc()/steps
          os.execute('pgrep nvidia-smi | xargs kill -s 9')
          memOut[j] = metahard.getMaxMemory()
-         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateOutput():', memOut[j]))
+         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateOutput():', memOut[j]))
 
          os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          cutorch.synchronize()
@@ -97,7 +97,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          cutorch.synchronize()
          os.execute('pgrep nvidia-smi | xargs kill -s 9')
          memGradInput[j] = metahard.getMaxMemory()
-         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateGradInput():', memGradInput[j]))
+         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateGradInput():', memGradInput[j]))
 
          os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
          cutorch.synchronize()
@@ -111,7 +111,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          timeGradPara[j] = sys.toc()/steps
          os.execute('pgrep nvidia-smi | xargs kill -s 9')
          memGradPara[j] = metahard.getMaxMemory()
-         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
+         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
          collectgarbage()
       end

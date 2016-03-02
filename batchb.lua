@@ -31,13 +31,13 @@ dh = 1,
 --filters = { 128 }
 --filters = { 32,48,64,80,96,112,128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368,384,400,416,432,448,464,480,496,512 }
 
---filters = { 128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368,384,400,416,432,448,464,480,496,512}
+filters = {32,64,96,128,160,192,224,256,288,320,352,384,416,448,480,512}
 
---for value, filter in ipairs(filters) do
+for value, filter in ipairs(filters) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,bs,kw,kh,iw,ih,dw,dh,no = run.ni,run.bs,run.kw,run.kh,run.iw,run.ih,run.dw,run.dh,run.no
-   --no = filter
+   bs = filter
    print('')
    print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
    local mods = {}

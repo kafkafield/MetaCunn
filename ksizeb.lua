@@ -31,13 +31,64 @@ dh = 1,
 --filters = { 128 }
 --filters = { 32,48,64,80,96,112,128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368,384,400,416,432,448,464,480,496,512 }
 
---filters = { 128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368,384,400,416,432,448,464,480,496,512}
+filters = {
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19,
+20,
+21,
+22,
+23,
+24,
+25,
+26,
+27,
+28,
+29,
+30,
+31,
+32,
+33,
+34,
+35,
+36,
+37,
+38,
+39,
+40,
+41,
+42,
+43,
+44,
+45,
+46,
+47,
+48,
+49,
+50,
+}
 
---for value, filter in ipairs(filters) do
+for value, filter in ipairs(filters) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,bs,kw,kh,iw,ih,dw,dh,no = run.ni,run.bs,run.kw,run.kh,run.iw,run.ih,run.dw,run.dh,run.no
-   --no = filter
+   kw = kh = filter
    print('')
    print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
    local mods = {}
