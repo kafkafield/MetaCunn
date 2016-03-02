@@ -35,10 +35,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    iw = iW
    bs = bS
    mods = {}
-   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh) :cuda()
-   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
-   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh) 
+   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh)
+   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4)
+   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh)
    outR, gradInputR, gradParaR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
 
    local outMod, gradInputMod, gradParaMod
@@ -47,6 +47,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       gradInputMod = gradInputR
       gradParaMod = gradParaR
       if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT' then
+         mods[4]:cuda()
          i1 = torch.randn(bs, ni, ih, iw):cuda()
          collectgarbage()
          mods[4]:forward(i1)
@@ -64,6 +65,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       local steps = 1
       
       for j=1,#mods do
+         mods[j]:cuda()
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
             i1 = torch.randn(ni, ih, iw, bs):cuda();
@@ -114,6 +116,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
          collectgarbage()
+         mod[j]:float()
       end
 
 
