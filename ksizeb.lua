@@ -2,6 +2,7 @@ require 'sys'
 require 'cunn'
 require 'ccn2'
 require 'cudnn'
+require 'metaHard'
 -- require 'fbcunn'
 -- require 'nnbhwd'
 
