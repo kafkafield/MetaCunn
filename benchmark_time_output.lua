@@ -188,7 +188,7 @@ for i,run in ipairs(runs) do
    print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -245,7 +245,7 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f"), bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4])
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
 end
 end
 
@@ -391,7 +391,8 @@ for value, filter in ipairs(input) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   ih = iw = filter
+   ih = filter
+   iw = filter
    print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
@@ -404,8 +405,10 @@ for i,run in ipairs(runs) do
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
-      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (ih != 32 and ih != 64 and ih != 96 and ih != 128 and ih != 192 and ih != 256) then
-         output[j] = gradInput[j] = gradPara[j] = nil
+      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (ih ~= 32 and ih ~= 64 and ih ~= 96 and ih ~= 128 and ih ~= 192 and ih ~= 256) then
+         output[j] = nil
+		 gradInput[j] = nil
+		 gradPara[j] = nil
       else
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
@@ -464,7 +467,8 @@ for value, filter in ipairs(kernel) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   kh = kw = filter
+   kh = filter
+   kw = filter
    print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
@@ -533,7 +537,8 @@ for value, filter in ipairs(strides) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   dw = dh = filter
+   dw = filter
+   dh = filter
    print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
@@ -547,7 +552,9 @@ for i,run in ipairs(runs) do
    for j=1,#mods do
       local tmf, tmbi, tmbg
       if torch.typename(mods[j]) == 'nn.SpatialConvolutionCuFFT' and dh > 1 then
-         output[j] = gradInput[j] = gradPara[j] = nil
+         output[j] = nil
+		 gradInput[j] = nil
+		 gradPara[j] = nil
       else
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
@@ -598,7 +605,7 @@ for i,run in ipairs(runs) do
          end
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f"), bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f"), bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4])
 end
 end
 
