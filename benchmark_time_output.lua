@@ -319,75 +319,6 @@ for i,run in ipairs(runs) do
 end
 end
 
-for value, filter in ipairs(channels) do
-for i,run in ipairs(runs) do
-   -- params for run:
-   local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   ni = filter
-   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
-   local mods = {}
-   local output = {}
-   local gradInput = {}
-   local gradPara = {}
-   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
-   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
-   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
-   -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
-   for j=1,#mods do
-      local tmf, tmbi, tmbg
-      collectgarbage()
-      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
-         i1 = torch.randn(ni, ih, iw, bs):cuda();
-      elseif torch.typename(mods[j]) == 'nn.SpatialConvolutionBHWD' then
-         i1 = torch.randn(bs, ih, iw, ni):cuda();
-      else
-         i1 = torch.randn(bs, ni, ih, iw):cuda()
-      end
-      collectgarbage()
-      local o1 = mods[j]:forward(i1)
-      cutorch.synchronize()
-      collectgarbage()
-      sys.tic()
-      for t = 1,steps do
-         o1 = mods[j]:updateOutput(i1)
-      end
-      cutorch.synchronize()
-      tmf = sys.toc()/steps
-      output[j] = tmf*1000
-      --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateOutput():', tmf*1000))
-
-      cutorch.synchronize()
-      collectgarbage()
-      sys.tic()
-      for t = 1,steps do
-         mods[j]:updateGradInput(i1, o1)
-      end
-      cutorch.synchronize()
-      tmbi = sys.toc()/steps
-      gradInput[j] = tmf*1000
-      --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateGradInput():', tmbi*1000))
-
-      cutorch.synchronize()
-      collectgarbage()
-      sys.tic()
-      local ok = 1
-      for t = 1,steps do
-         ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
-      end
-      cutorch.synchronize()
-      tmbg = sys.toc()/steps
-      if not ok then
-         --print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
-      else
-         gradPara[j] = tmbg * 1000
-         --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
-      end
-   end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
-end
-end
-
 for value, filter in ipairs(filters) do
 for i,run in ipairs(runs) do
    -- params for run:
@@ -603,6 +534,75 @@ for i,run in ipairs(runs) do
             gradPara[j] = tmbg * 1000
             --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
          end
+      end
+   end
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+end
+end
+
+for value, filter in ipairs(channels) do
+for i,run in ipairs(runs) do
+   -- params for run:
+   local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
+   ni = filter
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   local mods = {}
+   local output = {}
+   local gradInput = {}
+   local gradPara = {}
+   mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
+   mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
+   mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
+   for j=1,#mods do
+      local tmf, tmbi, tmbg
+      collectgarbage()
+      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
+         i1 = torch.randn(ni, ih, iw, bs):cuda();
+      elseif torch.typename(mods[j]) == 'nn.SpatialConvolutionBHWD' then
+         i1 = torch.randn(bs, ih, iw, ni):cuda();
+      else
+         i1 = torch.randn(bs, ni, ih, iw):cuda()
+      end
+      collectgarbage()
+      local o1 = mods[j]:forward(i1)
+      cutorch.synchronize()
+      collectgarbage()
+      sys.tic()
+      for t = 1,steps do
+         o1 = mods[j]:updateOutput(i1)
+      end
+      cutorch.synchronize()
+      tmf = sys.toc()/steps
+      output[j] = tmf*1000
+      --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateOutput():', tmf*1000))
+
+      cutorch.synchronize()
+      collectgarbage()
+      sys.tic()
+      for t = 1,steps do
+         mods[j]:updateGradInput(i1, o1)
+      end
+      cutorch.synchronize()
+      tmbi = sys.toc()/steps
+      gradInput[j] = tmf*1000
+      --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateGradInput():', tmbi*1000))
+
+      cutorch.synchronize()
+      collectgarbage()
+      sys.tic()
+      local ok = 1
+      for t = 1,steps do
+         ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
+      end
+      cutorch.synchronize()
+      tmbg = sys.toc()/steps
+      if not ok then
+         --print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
+      else
+         gradPara[j] = tmbg * 1000
+         --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
