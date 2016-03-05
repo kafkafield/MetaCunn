@@ -257,7 +257,7 @@ for i,run in ipairs(runs) do
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -326,7 +326,7 @@ for i,run in ipairs(runs) do
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -396,7 +396,7 @@ for i,run in ipairs(runs) do
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -472,7 +472,7 @@ for i,run in ipairs(runs) do
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -542,7 +542,7 @@ for i,run in ipairs(runs) do
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
-   local greadInput = {}
+   local gradInput = {}
    local gradPara = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
