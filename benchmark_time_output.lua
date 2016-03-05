@@ -179,13 +179,13 @@ channels = {
 416,
 432,
 }
-
+print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
 for value, filter in ipairs(batch) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    bs = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local gradInput = {}
@@ -254,7 +254,7 @@ for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    no = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local greadInput = {}
@@ -323,7 +323,7 @@ for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    ni = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local greadInput = {}
@@ -393,7 +393,7 @@ for i,run in ipairs(runs) do
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    ih = filter
    iw = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local greadInput = {}
@@ -469,7 +469,7 @@ for i,run in ipairs(runs) do
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    kh = filter
    kw = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local greadInput = {}
@@ -539,7 +539,7 @@ for i,run in ipairs(runs) do
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
    dw = filter
    dh = filter
-   print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
+   -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
    local greadInput = {}
