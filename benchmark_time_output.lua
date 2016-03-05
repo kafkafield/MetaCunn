@@ -249,11 +249,12 @@ for i,run in ipairs(runs) do
 end
 end
 
-for value, filter in ipairs(filters) do
+for value, filter in ipairs(input) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   no = filter
+   ih = filter
+   iw = filter
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
@@ -262,7 +263,7 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
@@ -331,7 +332,7 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
@@ -387,12 +388,11 @@ for i,run in ipairs(runs) do
 end
 end
 
-for value, filter in ipairs(input) do
+for value, filter in ipairs(filters) do
 for i,run in ipairs(runs) do
    -- params for run:
    local ni,no,kw,kh,bs,iw,ih,dw,dh = run.ni,run.no,run.kw,run.kh,run.bs,run.iw,run.ih,run.dw,run.dh
-   ih = filter
-   iw = filter
+   no = filter
    -- print('bs,ni,no,ih,kh,dh,cunn,ccn2,cudnn,fbfft')
    local mods = {}
    local output = {}
@@ -401,14 +401,14 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
-      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (ih ~= 32 and ih ~= 64 and ih ~= 96 and ih ~= 128 and ih ~= 192 and ih ~= 256) then
+      if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (no ~= 32 and no ~= 64 and no ~= 96 and no ~= 128 and no ~= 192 and no ~= 256) then
          output[j] = nil
-		 gradInput[j] = nil
-		 gradPara[j] = nil
+         gradInput[j] = nil
+         gradPara[j] = nil
       else
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
@@ -477,7 +477,7 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   --mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
