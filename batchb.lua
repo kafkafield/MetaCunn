@@ -20,7 +20,7 @@ kw = 11,
 kh = 11,
 iw = 128,
 ih = 128,
-bs = 512,
+bs = 64,
 dw = 1,
 dh = 1,
    }
@@ -40,7 +40,7 @@ for i,run in ipairs(runs) do
    local ni,bs,kw,kh,iw,ih,dw,dh,no = run.ni,run.bs,run.kw,run.kh,run.iw,run.ih,run.dw,run.dh,run.no
    bs = filter
    print('')
-   print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
+   print('bs\tni\tno\tih\tkh\tdh')
    local mods = {}
    --mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[1] = nn.SpatialConvolutionMetaHard(ni,no,kw,kh,dw,dh,iw,ih,bs):cuda()
