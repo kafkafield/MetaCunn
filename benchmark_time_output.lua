@@ -193,7 +193,7 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   -- mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
@@ -245,7 +245,7 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
@@ -314,7 +314,7 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
@@ -383,7 +383,7 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
@@ -459,7 +459,7 @@ for i,run in ipairs(runs) do
          end
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
@@ -529,7 +529,7 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
@@ -605,7 +605,7 @@ for i,run in ipairs(runs) do
          end
       end
    end
-   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3], output[4]))
+   print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
 end
 
