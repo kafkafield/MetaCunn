@@ -247,6 +247,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 for value, filter in ipairs(input) do
@@ -317,6 +318,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 for value, filter in ipairs(filters) do
@@ -392,6 +394,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 for value, filter in ipairs(kernel) do
@@ -462,6 +465,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 for value, filter in ipairs(strides) do
@@ -478,7 +482,7 @@ for i,run in ipairs(runs) do
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   -- mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do
       local tmf, tmbi, tmbg
@@ -538,6 +542,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 for value, filter in ipairs(channels) do
@@ -607,6 +612,7 @@ for i,run in ipairs(runs) do
    end
    print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
 end
+collectgarbage()
 end
 
 print('')
