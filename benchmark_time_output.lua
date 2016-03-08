@@ -339,9 +339,9 @@ for i,run in ipairs(runs) do
    for j=1,#mods do
       local tmf, tmbi, tmbg
       if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (no ~= 32 and no ~= 64 and no ~= 96 and no ~= 128 and no ~= 192 and no ~= 256) then
-         output[j] = nil
-         gradInput[j] = nil
-         gradPara[j] = nil
+         output[j] = -1
+         gradInput[j] = -1
+         gradPara[j] = -1
       else
          collectgarbage()
          if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
