@@ -475,7 +475,7 @@ for i,run in ipairs(runs) do
       cutorch.synchronize()
       tmbg = sys.toc()/steps
       if not ok then
-         --print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
+         gradPara[j] = -1--print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
       else
          gradPara[j] = tmbg * 1000
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
