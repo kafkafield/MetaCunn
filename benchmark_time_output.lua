@@ -248,11 +248,11 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
@@ -324,11 +324,11 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
@@ -405,11 +405,11 @@ for i,run in ipairs(runs) do
          end
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
@@ -481,11 +481,11 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
@@ -563,11 +563,11 @@ for i,run in ipairs(runs) do
          end
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
@@ -638,11 +638,11 @@ for i,run in ipairs(runs) do
          --print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
    end
-   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
+   foutput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, output[1], output[2], output[3]))--, output[4]))
    foutput:flush()
-   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
+   fgradinput:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradInput[1], gradInput[2], gradInput[3]))--, output[4]))
    fgradinput:flush()
-   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
+   fgradpara:write(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f\n", bs, ni, no, ih, kh, dh, gradPara[1], gradPara[2], gradPara[3]))--, output[4]))
    fgradpara:flush()
 end
 collectgarbage()
