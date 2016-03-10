@@ -1,0 +1,24 @@
+Running on device: Tesla K40c	
+	
+CONFIG: input = 3x128x128 * ker = 3x64x11x11 (bs = 64, stride = 1)	
+nn.SpatialConvolutionCuFFT              :updateOutput():      23.22	
+nn.SpatialConvolutionCuFFT           :updateGradInput():      21.89	
+nn.SpatialConvolutionCuFFT         :accGradParameters():      25.26	
+nn.SpatialConvolutionCuFFT                       :TOTAL:      70.37	
+	
+Running on device: Tesla K40c	
+	
+CONFIG: input = 3x128x128 * ker = 3x64x11x11 (bs = 64, stride = 1)	
+nn.SpatialConvolutionCuFFT              :updateOutput():      23.19	
+nn.SpatialConvolutionCuFFT           :updateGradInput():      21.91	
+nn.SpatialConvolutionCuFFT         :accGradParameters():      25.30	
+nn.SpatialConvolutionCuFFT                       :TOTAL:      70.39	
+	
+Running on device: Tesla K40c	
+	
+CONFIG: input = 3x128x128 * ker = 3x64x11x11 (bs = 64, stride = 1)	
+nn.SpatialConvolutionCuFFT              :updateOutput():      23.19	
+nn.SpatialConvolutionCuFFT           :updateGradInput():      22.07	
+nn.SpatialConvolutionCuFFT         :accGradParameters():      25.54	
+nn.SpatialConvolutionCuFFT                       :TOTAL:      70.80	
+	
