@@ -26,7 +26,6 @@ dh = 1,
 
 
 }
-
 --filters = { 128 }
 --filters = { 32,48,64,80,96,112,128,144,160,176,192,208,224,240,256,272,288,304,320,336,352,368,384,400,416,432,448,464,480,496,512 }
 
@@ -65,7 +64,7 @@ for i,run in ipairs(runs) do
       end
       cutorch.synchronize()
       tmf = sys.toc()/steps
-      print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateOutput():', tmf*1000))
+      -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateOutput():', tmf*1000))
 
       cutorch.synchronize()
       collectgarbage()
@@ -75,7 +74,7 @@ for i,run in ipairs(runs) do
       end
       cutorch.synchronize()
       tmbi = sys.toc()/steps
-      print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateGradInput():', tmbi*1000))
+      -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateGradInput():', tmbi*1000))
 
       cutorch.synchronize()
       collectgarbage()
@@ -89,10 +88,10 @@ for i,run in ipairs(runs) do
       if not ok then
          print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
       else
-         print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
+         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
-      print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':TOTAL:', (tmf+tmbi+tmbg)*1000))
-      print()
+      print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, tmf*1000, tmbi*1000, tmbg*1000))--, output[4]))
+      --foutput:flush()
    end
 end
 --end
