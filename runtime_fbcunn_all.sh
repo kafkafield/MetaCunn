@@ -11,7 +11,7 @@ do
 
 done
 
-val = 64
+val=64
 sed -i '22s/bs = .*/bs = '$val',/' benchmark-batch-fbcunn.lua
 
 # Input size
@@ -26,7 +26,7 @@ do
 
 done
 
-val = 128
+val=128
 sed -i '20s/iw = .*/iw = '$val',/' benchmark-batch-fbcunn.lua
 sed -i '20s/ih = .*/ih = '$val',/' benchmark-batch-fbcunn.lua
 
@@ -41,7 +41,7 @@ do
 
 done
 
-val = 64
+val=64
 sed -i '17s/no = .*/no = '$val',/' benchmark-batch-fbcunn.lua
 
 # Kernel size
@@ -55,7 +55,7 @@ do
 
 done
 
-val = 11
+val=11
 sed -i '18s/kw = .*/kw = '$val',/' benchmark-batch-fbcunn.lua
 sed -i '19s/kh = .*/kh = '$val',/' benchmark-batch-fbcunn.lua
 

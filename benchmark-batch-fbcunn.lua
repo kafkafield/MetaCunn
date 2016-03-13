@@ -5,7 +5,7 @@ require 'sys'
 require 'fbcunn'
 -- require 'nnbhwd'
 
-print('Running on device: ' .. cutorch.getDeviceProperties(cutorch.getDevice()).name)
+-- print('Running on device: ' .. cutorch.getDeviceProperties(cutorch.getDevice()).name)
 
 steps = 5 -- nb of steps in loop to average perf
 
@@ -36,8 +36,8 @@ for i,run in ipairs(runs) do
    -- params for run:
    local ni,bs,kw,kh,iw,ih,dw,dh,no = run.ni,run.bs,run.kw,run.kh,run.iw,run.ih,run.dw,run.dh,run.no
    --no = filter
-   print('')
-   print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
+   -- print('')
+   -- print('CONFIG: input = ' .. ni..'x'..iw..'x'..ih..' * ker = ' .. ni..'x'..no..'x'..kw..'x'..kh .. ' (bs = '..bs..', stride = ' .. dw .. ')')
    local mods = {}
   -- mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
   -- mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
@@ -87,6 +87,7 @@ for i,run in ipairs(runs) do
       tmbg = sys.toc()/steps
       if not ok then
          print(string.format("%-30s %25s %s", torch.typename(mods[j]), ':accGradParameters():', 'FAILED!'))
+         tmbg = -0.001
       else
          -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
