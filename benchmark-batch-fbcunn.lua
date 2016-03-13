@@ -1,6 +1,6 @@
 require 'sys'
 --require 'cunn'
---require 'ccn2'
+require 'ccn2'
 --require 'cudnn'
 require 'fbcunn'
 -- require 'nnbhwd'
@@ -19,7 +19,7 @@ kw = 11,
 kh = 11,
 iw = 128,
 ih = 128,
-bs = 512,
+bs = 64,
 dw = 1,
 dh = 1,
    }
@@ -41,8 +41,8 @@ for i,run in ipairs(runs) do
    local mods = {}
   -- mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh):cuda()
   -- mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh):cuda()
-  --   mods[1] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   mods[1] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+     mods[1] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   -- mods[1] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
    -- mods[4] = nn.SpatialConvolutionBHWD(ni,no,kw,kh,dw,dh):cuda()
    for j=1,#mods do   
       local tmf, tmbi, tmbg
@@ -58,7 +58,7 @@ for i,run in ipairs(runs) do
       local o1 = mods[j]:forward(i1)
       cutorch.synchronize()
       collectgarbage()
-      sys.tic()
+ --[[     sys.tic()
       for t = 1,steps do
          o1 = mods[j]:updateOutput(i1)
       end
@@ -77,7 +77,7 @@ for i,run in ipairs(runs) do
       -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':updateGradInput():', tmbi*1000))
 
       cutorch.synchronize()
-      collectgarbage()
+      collectgarbage()]]
       sys.tic()
       local ok = 1
       for t = 1,steps do
@@ -91,7 +91,7 @@ for i,run in ipairs(runs) do
       else
          -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
-      print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, tmf*1000, tmbi*1000, tmbg*1000))--, output[4]))
+      print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, tmbg*1000))--, output[4]))
       --foutput:flush()
    end
 end
