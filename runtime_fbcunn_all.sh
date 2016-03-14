@@ -73,6 +73,10 @@ do
 
 done
 
+val=1
+sed -i '23s/dw = .*/dw = '$val',/' $programfile
+sed -i '24s/dh = .*/dh = '$val',/' $programfile
+
 #ni size
 
 for val in 1 3 32 48 64 80 96 112 128 144 160 176 192 208 224 240 256 272 288 304 320 336 352 368 384

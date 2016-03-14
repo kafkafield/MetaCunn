@@ -91,7 +91,7 @@ for i,run in ipairs(runs) do
       else
          -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), ':accGradParameters():', tmbg*1000))
       end
-      print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, tmf * 1000, tmbi * 1000, tmbg*1000))--, output[4]))
+      print(string.format("%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f,%10.2f", bs, ni, no, ih, kh, dh, tmf * 1000, tmbi * 1000, tmbg*1000))--, output[4]))
       --foutput:flush()
    end
 end
