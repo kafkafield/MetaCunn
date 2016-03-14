@@ -55,7 +55,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          collectgarbage()
       end
    else
-      print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      -- print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       timeOut = {}
       timeGradInput = {}
       timeGradPara = {}
@@ -65,58 +65,68 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       local steps = 1
       
       for j=1,#mods do
-         mods[j]:cuda()
          collectgarbage()
-         if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
-            i1 = torch.randn(ni, ih, iw, bs):cuda();
+         if (torch.typename(mods[j]) == 'nn.SpatialConvolutionCuFFT' and dh > 1) or (torch.typename(mods[j]) == 'ccn2.SpatialConvolution' and (no ~= 32 and no ~= 64 and no ~= 96 and no ~= 128 and no ~= 192 and no ~= 256)) then
+            timeOut[j] = 1000000
+            timeGradInput[j] = 1000000
+            timeGradPara[j] = 1000000
          else
-            i1 = torch.randn(bs, ni, ih, iw):cuda();
-         end
-         collectgarbage()
-         local o1 = mods[j]:forward(i1)
-         cutorch.synchronize()
+            mods[j]:cuda()
+            collectgarbage()
+            if torch.typename(mods[j]) == 'ccn2.SpatialConvolution' then
+               i1 = torch.randn(ni, ih, iw, bs):cuda();
+            else
+               i1 = torch.randn(bs, ni, ih, iw):cuda();
+            end
+            collectgarbage()
+            local o1 = mods[j]:forward(i1)
+            cutorch.synchronize()
 
-         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
-         collectgarbage()
-         sys.tic()
-         for t = 1,steps do
-            o1 = mods[j]:updateOutput(i1)
-         end
-         cutorch.synchronize()
-         timeOut[j] = sys.toc()/steps
-         os.execute('pgrep nvidia-smi | xargs kill -s 9')
-         memOut[j] = metahard.getMaxMemory()
-         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateOutput():', memOut[j]))
+            os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
+            collectgarbage()
+            sys.tic()
+            for t = 1,steps do
+               o1 = mods[j]:updateOutput(i1)
+            end
+            cutorch.synchronize()
+            timeOut[j] = sys.toc()/steps
+            os.execute('pgrep nvidia-smi | xargs kill -s 9')
+            memOut[j] = metahard.getMaxMemory()
+            -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateOutput():', memOut[j]))
 
-         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
-         cutorch.synchronize()
-         collectgarbage()
-         sys.tic()
-         for t = 1,steps do
-            mods[j]:updateGradInput(i1, o1)
-         end
-         timeGradInput[j] = sys.toc()/steps
-         cutorch.synchronize()
-         os.execute('pgrep nvidia-smi | xargs kill -s 9')
-         memGradInput[j] = metahard.getMaxMemory()
-         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateGradInput():', memGradInput[j]))
+            os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
+            cutorch.synchronize()
+            collectgarbage()
+            sys.tic()
+            for t = 1,steps do
+               mods[j]:updateGradInput(i1, o1)
+            end
+            timeGradInput[j] = sys.toc()/steps
+            cutorch.synchronize()
+            os.execute('pgrep nvidia-smi | xargs kill -s 9')
+            memGradInput[j] = metahard.getMaxMemory()
+            -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :updateGradInput():', memGradInput[j]))
 
-         os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
-         cutorch.synchronize()
-         collectgarbage()
-         sys.tic()
-         local ok = 1
-         for t = 1,steps do
-            ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
-         end
-         cutorch.synchronize()
-         timeGradPara[j] = sys.toc()/steps
-         os.execute('pgrep nvidia-smi | xargs kill -s 9')
-         memGradPara[j] = metahard.getMaxMemory()
-         -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
+            os.execute('nvidia-smi --query-gpu=memory.used --format=csv -lms 1 -f ./heihei &')
+            cutorch.synchronize()
+            collectgarbage()
+            sys.tic()
+            local ok = 1
+            for t = 1,steps do
+               ok = pcall(function() mods[j]:accGradParameters(i1, o1) end)
+            end
+            cutorch.synchronize()
+            timeGradPara[j] = sys.toc()/steps
+            if not ok then
+               timeGradPara[j] = 1000000
+            end
+            os.execute('pgrep nvidia-smi | xargs kill -s 9')
+            memGradPara[j] = metahard.getMaxMemory()
+            -- print(string.format("%-30s %25s %10.2f", torch.typename(mods[j]), 'Memory :accGradParameters():', memGradPara[j]))
 
-         collectgarbage()
-         mods[j]:float()
+            collectgarbage()
+            mods[j]:float()
+         end
       end
 
 
