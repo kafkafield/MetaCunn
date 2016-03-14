@@ -87,3 +87,6 @@ do
         th $programfile >> $logfile #>> ./runtime_test/filter_fbcunn.out
 
 done
+
+val=3
+sed -i '16s/ni = .*/ni = '$val',/' $programfile
