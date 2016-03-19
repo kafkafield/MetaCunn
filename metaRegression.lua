@@ -196,19 +196,19 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
 
       -- regression model
       kh3 = kh^3
-      ih2 ＝ ih^2
-      nofix128 ＝ math.ceil(no/128)*128-no
-      khlog ＝ log(kh)
-      dhm2 ＝ 1/dh^2
-      kh2 ＝ (1+(-1)^(math.ceil((kh+2)%%4/4)))/2*kh
-      kh4 ＝ (1+(-1)^(math.ceil((kh)%%4/4)))/2*kh
-      nofix64 ＝ math.ceil(no/64)*64 - no
-      bsfix32 ＝ (1+(-1)^(math.ceil((bs)%%64/64)))/2*bs
-      bsfix128 ＝ (1+(-1)^(math.ceil((bs)%%128/128)))/2*bs
-      ihl144 ＝ -ih*math.floor((ih-144)/256)
-      ihh144 ＝ -ih*math.floor((143-ih)/256)
-      ihl1442 ＝ ihl144^2
-      ihh1442 ＝ ihh144^2
+      ih2 = ih^2
+      nofix128 = math.ceil(no/128)*128-no
+      khlog = log(kh)
+      dhm2 = 1/dh^2
+      kh2 = (1+(-1)^(math.ceil((kh+2)%4/4)))/2*kh
+      kh4 = (1+(-1)^(math.ceil((kh)%4/4)))/2*kh
+      nofix64 = math.ceil(no/64)*64 - no
+      bsfix32 = (1+(-1)^(math.ceil((bs)%64/64)))/2*bs
+      bsfix128 = (1+(-1)^(math.ceil((bs)%128/128)))/2*bs
+      ihl144 = -ih*math.floor((ih-144)/256)
+      ihh144 = -ih*math.floor((143-ih)/256)
+      ihl1442 = ihl144^2
+      ihh1442 = ihh144^2
 
       timeOut[2] = regressall[1].intercept + regressall[1].bs*bs + regressall[1].ih2 * ih2 + regressall[1].ni * ni + regressall[1].no * no + 
          regressall[1].nofix64 * nofix64 + regressall[1].khlog * khlog + regressall[1].kh * kh + regressall[1].dhm2 * dhm2   
