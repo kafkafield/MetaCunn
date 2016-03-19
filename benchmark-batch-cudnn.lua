@@ -13,7 +13,7 @@ runs = {
    
    {
       -- first layer
-ni = 320,
+ni = 3,
 no = 64,
 kw = 11,
 kh = 11,
