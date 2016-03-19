@@ -202,6 +202,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       dhm2 = 1/dh^2
       kh2 = (1+(-1)^(math.ceil((kh+2)%4/4)))/2*kh
       kh4 = (1+(-1)^(math.ceil((kh)%4/4)))/2*kh
+      no3 = no^3
       nofix64 = math.ceil(no/64)*64 - no
       bsfix32 = (1+(-1)^(math.ceil((bs)%64/64)))/2*bs
       bsfix128 = (1+(-1)^(math.ceil((bs)%128/128)))/2*bs
