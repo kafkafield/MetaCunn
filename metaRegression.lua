@@ -229,12 +229,12 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          regressall[8].ni * ni + regressall[8].no * no + regressall[8].kh * kh + regressall[8].dhm2 * dhm2
       timeGradPara[3] = regressall[9].intercept + regressall[9].bs*bs + regressall[9].ih2 * ih2 + regressall[9].khlog * khlog + 
          regressall[9].ni * ni + regressall[9].no * no + regressall[9].kh * kh + regressall[9].dhm2 * dhm2
-      timeOut[4] = regressall[10].intercept + regressall[10].bs*bs + regressall[10].bsfix128*bsfix128+ regressall[10].bsfix32*bsfix32 + regressall[10].ihl1442 * ihl1442 + 
-         regressall[10].ihh1442 * ihh1442 +regressall[10].ihh144 * ihh144 + regressall[10].ni * ni + regressall[10].no * no + regressall[10].kh * kh + regressall[10].dhm2 * dhm2
-      timeGradInput[4] = regressall[11].intercept + regressall[11].bs*bs + regressall[11].bsfix128*bsfix128+ regressall[11].bsfix32*bsfix32 + regressall[11].ihl1442 * ihl1442 + 
-         regressall[11].ihh1442 * ihh1442 +regressall[11].ihh144 * ihh144 + regressall[11].ni * ni + regressall[11].no * no + regressall[11].kh * kh + regressall[11].dhm2 * dhm2
-      timeGradPara[4] = regressall[12].intercept + regressall[12].bs*bs + regressall[12].bsfix128*bsfix128+ regressall[12].bsfix32*bsfix32 + regressall[12].ihl1442 * ihl1442 + 
-         regressall[12].ihh1442 * ihh1442 +regressall[12].ihh144 * ihh144 + regressall[12].ni * ni + regressall[12].no * no + regressall[12].kh * kh + regressall[12].dhm2 * dhm2
+      timeOut[4] = regressall[10].intercept + regressall[10].bs*bs + regressall[10].ihl1442 * ihl1442 + 
+         regressall[10].ihh1442 * ihh1442 +regressall[10].ihh144 * ihh144 + regressall[10].ni * ni + regressall[10].no * no + regressall[10].kh * kh
+      timeGradInput[4] = regressall[11].intercept + regressall[11].bs*bs + regressall[11].ihl1442 * ihl1442 + 
+         regressall[11].ihh1442 * ihh1442 +regressall[11].ihh144 * ihh144 + regressall[11].ni * ni + regressall[11].no * no + regressall[11].kh * kh
+      timeGradPara[4] = regressall[12].intercept + regressall[12].bs*bs  + regressall[12].ihl1442 * ihl1442 + 
+         regressall[12].ihh1442 * ihh1442 +regressall[12].ihh144 * ihh144 + regressall[12].ni * ni + regressall[12].no * no + regressall[12].kh * kh
       if (dh > 1) then
          timeOut[4] = 100000
          timeGradInput[4] = 100000
