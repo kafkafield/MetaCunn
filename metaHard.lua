@@ -161,6 +161,33 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    print(self.playOutput)
    print(self.playGradInput)
    print(self.playGradPara)
+
+   -- kernel
+   self.weight = torch.Tensor(nOutputPlane, nInputPlane, kH, kW)
+   self.bias = torch.Tensor(nOutputPlane)
+   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane, kH, kW)
+   self.gradBias = torch.Tensor(nOutputPlane)
+
+   self:reset()
+end
+
+function SpatialConvolutionMetaHard:reset(stdv)
+   if stdv then
+      stdv = stdv * math.sqrt(3)
+   else
+      stdv = 1/math.sqrt(self.kW*self.kH*self.nInputPlane)
+   end
+   if nn.oldSeed then
+      self.weight:apply(function()
+         return torch.uniform(-stdv, stdv)
+      end)
+      self.bias:apply(function()
+         return torch.uniform(-stdv, stdv)
+      end)
+   else
+      self.weight:uniform(-stdv, stdv)
+      self.bias:uniform(-stdv, stdv)
+   end
 end
 
 function transposeInput(typename, input)
