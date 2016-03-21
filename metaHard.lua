@@ -171,6 +171,7 @@ end
 
 function SpatialConvolutionMetaHard:updateOutput(input)
    -- print(self.playOutput)
+   print("!!!!!!!!!!!!!!!!!!!")
    transposeInput(self.playOutput, input)
    return self.playOutput:updateOutput(input)
 end
