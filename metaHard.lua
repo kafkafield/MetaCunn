@@ -156,6 +156,9 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.playOutput = mods[outMod]
    self.playGradInput = mods[gradInputMod]
    self.playGradPara = mods[gradParaMod]
+   print(self.playOutput)
+   print(self.playGradInput)
+   print(self.playGradPara)
 end
 
 function transposeInput(typename, input)
