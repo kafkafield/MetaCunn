@@ -178,6 +178,7 @@ end
 
 function SpatialConvolutionMetaHard:updateGradInput(input, gradOutput)
    -- print(self.playGradInput)
+   print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
    transposeInput(self.playGradInput, input)
    return self.playGradInput:updateGradInput(input, gradOutput)
 end
