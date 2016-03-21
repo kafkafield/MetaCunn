@@ -22,6 +22,8 @@ function writefile(filename, info)
 	wfile:close()
 end
 
+transpose1 = nn.Transpose({1,2}, {2,3}, {3,4}):cuda()
+
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
    parent.__init(self)
@@ -170,23 +172,30 @@ function transposeInput(typename, input)
 end
 
 function SpatialConvolutionMetaHard:updateOutput(input)
-   -- print(self.playOutput)
-   print("!!!!!!!!!!!!!!!!!!!")
-   transposeInput(self.playOutput, input)
-   return self.playOutput:updateOutput(input)
+   if torch.typename(self.playOutput) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      return self.playOutput:updateOutput(input2)
+   else
+      return self.playOutput:updateOutput(input)
+   end
 end
 
 function SpatialConvolutionMetaHard:updateGradInput(input, gradOutput)
-   -- print(self.playGradInput)
-   print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-   transposeInput(self.playGradInput, input)
-   return self.playGradInput:updateGradInput(input, gradOutput)
+   if torch.typename(self.playGradInput) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      return self.playGradInput:updateGradInput(input2, gradOutput)
+   else
+      return self.playGradInput:updateGradInput(input, gradOutput)
+   end
 end
 
 function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
-   -- print(self.playGradPara)
-   transposeInput(self.playGradPara, input)
-   return self.playGradPara:accGradParameters(input, gradOutput)
+   if torch.typename(self.playGradPara) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      return self.playGradPara:accGradParameters(input2, gradOutput)
+   else
+      return self.playGradPara:accGradParameters(input, gradOutput)
+   end
 end
 
 function SpatialConvolutionMetaHard:reset()
