@@ -19,10 +19,11 @@ transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
 
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
-   parent.__init(self)   
-   self.playOutput = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   parent.__init(self) 
+   ccn =  ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   self.playOutput = ccn
    self.playGradInput = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
-   self.playGradPara = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
+   self.playGradPara = ccn
 
    print(self.playOutput)
    print(self.playGradInput)
