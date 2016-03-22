@@ -23,6 +23,7 @@ function writefile(filename, info)
 end
 
 transpose1 = nn.Transpose({1,2}, {2,3}, {3,4}):cuda()
+transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
 
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
