@@ -201,7 +201,9 @@ end
 function SpatialConvolutionMetaHard:updateOutput(input)
    if torch.typename(self.playOutput) == 'ccn2.SpatialConvolution' then
       input2 = transpose1:updateOutput(input)
-      return self.playOutput:updateOutput(input2)
+      out = self.playOutput:updateOutput(input2)
+      print(input2:size())
+      return transpose2:updateOutput(out)
    else
       return self.playOutput:updateOutput(input)
    end
@@ -210,7 +212,13 @@ end
 function SpatialConvolutionMetaHard:updateGradInput(input, gradOutput)
    if torch.typename(self.playGradInput) == 'ccn2.SpatialConvolution' then
       input2 = transpose1:updateOutput(input)
-      return self.playGradInput:updateGradInput(input2, gradOutput)
+      print(input2:size())
+      gradOutput2 = transpose2:updateGradInput(input2, gradOutput)
+      gradOutput3 = self.playGradInput:updateGradInput(input2, gradOutput2)
+      gradOutput4 = transpose1:updateGradInput(input2, gradOutput3)
+      print(gradOutput:size())
+      print(gradOutput3:size())
+      return gradOutput4
    else
       return self.playGradInput:updateGradInput(input, gradOutput)
    end
@@ -219,9 +227,10 @@ end
 function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
    if torch.typename(self.playGradPara) == 'ccn2.SpatialConvolution' then
       input2 = transpose1:updateOutput(input)
-      return self.playGradPara:accGradParameters(input2, gradOutput)
+      gradOutput2 = transpose2:updateGradInput(input2, gradOutput)
+      self.playGradPara:accGradParameters(input2, gradOutput2)
    else
-      return self.playGradPara:accGradParameters(input, gradOutput)
+      self.playGradPara:accGradParameters(input, gradOutput)
    end
 end
 
