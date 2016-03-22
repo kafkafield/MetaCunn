@@ -31,9 +31,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    iw = iW
    bs = bS
    ccn =  ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4):cuda()
-   self.playOutput = ccn
-   self.playGradInput = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
-   self.playGradPara = ccn
+   fbfft = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh):cuda()
+   self.playOutput = fbfft
+   self.playGradInput = ccn
+   self.playGradPara = fbfft
 
    print(self.playOutput)
    print(self.playGradInput)
