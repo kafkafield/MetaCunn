@@ -204,7 +204,7 @@ function transposeInput(typename, input)
    end
 end
 
-function copykernelMtoI(inplem)
+function SpatialConvolutionMetaHard:copykernelMtoI(inplem)
    if torch.typename(typename) == 'ccn2.SpatialConvolution' then
       inplem.gradKernel = transposeKernel:updateOutput(self.gradKernel)
       inplem.gradBias:copy(self.gradBias)
@@ -214,7 +214,7 @@ function copykernelMtoI(inplem)
    end
 end
 
-function copykernelItoM(inplem)
+function SpatialConvolutionMetaHard:copykernelItoM(inplem)
    if torch.typename(typename) == 'ccn2.SpatialConvolution' then
       self.gradKernel = transposeKernel:updateOutput(inplem.gradKernel)
       self.gradBias:copy(inplem.gradBias)
