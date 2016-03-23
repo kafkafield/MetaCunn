@@ -206,20 +206,20 @@ end
 
 function SpatialConvolutionMetaHard:copykernelMtoI(inplem)
    if torch.typename(typename) == 'ccn2.SpatialConvolution' then
-      inplem.gradKernel = transposeKernel:updateOutput(self.gradKernel)
+      inplem.gradWeight = transposeKernel:updateOutput(self.gradWeight)
       inplem.gradBias:copy(self.gradBias)
    else
-      inplem.gradKernel:copy(self.gradKernel)
+      inplem.gradWeight:copy(self.gradWeight)
       inplem.gradBias:copy(self.gradBias)
    end
 end
 
 function SpatialConvolutionMetaHard:copykernelItoM(inplem)
    if torch.typename(typename) == 'ccn2.SpatialConvolution' then
-      self.gradKernel = transposeKernel:updateOutput(inplem.gradKernel)
+      self.gradWeight = transposeKernel:updateOutput(inplem.gradWeight)
       self.gradBias:copy(inplem.gradBias)
    else
-      self.gradKernel:copy(inplem.gradKernel)
+      self.gradWeight:copy(inplem.gradWeight)
       self.gradBias:copy(inplem.gradBias)
    end
 end
