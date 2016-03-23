@@ -259,8 +259,4 @@ function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
    copykernelMtoI(self.playGradInput)
 end
 
-function SpatialConvolutionMetaHard:reset()
-   self.play:reset()
-end
-
 return metaHard
