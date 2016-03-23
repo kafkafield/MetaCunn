@@ -24,6 +24,7 @@ end
 
 transpose1 = nn.Transpose({1,2}, {2,3}, {3,4}):cuda()
 transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
+transposeKernel = nn.Transpose({1,2}):cuda()
 
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
@@ -164,9 +165,9 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    print(self.playGradPara)
 
    -- kernel
-   self.weight = torch.Tensor(nOutputPlane, nInputPlane, kH, kW)
+   self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
    self.bias = torch.Tensor(nOutputPlane)
-   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane, kH, kW)
+   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
    self.gradBias = torch.Tensor(nOutputPlane)
 
    self:reset()
@@ -196,6 +197,26 @@ function transposeInput(typename, input)
       input:transpose(1, 2);
       input:transpose(3, 2);
       input:transpose(3, 4);
+   end
+end
+
+function copykernelMtoI(inplem)
+   if torch.typename(typename) == 'ccn2.SpatialConvolution' then
+      inplem.gradKernel = transposeKernel:updateOutput(self.gradKernel)
+      inplem.gradBias:copy(self.gradBias)
+   else
+      inplem.gradKernel:copy(self.gradKernel)
+      inplem.gradBias:copy(self.gradBias)
+   end
+end
+
+function copykernelItoM(inplem)
+   if torch.typename(typename) == 'ccn2.SpatialConvolution' then
+      self.gradKernel = transposeKernel:updateOutput(inplem.gradKernel)
+      self.gradBias:copy(inplem.gradBias)
+   else
+      self.gradKernel:copy(inplem.gradKernel)
+      self.gradBias:copy(inplem.gradBias)
    end
 end
 
@@ -233,6 +254,9 @@ function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
    else
       self.playGradPara:accGradParameters(input, gradOutput)
    end
+   copykernelItoM(self.playGradPara)
+   copykernelMtoI(self.playOutput)
+   copykernelMtoI(self.playGradInput)
 end
 
 function SpatialConvolutionMetaHard:reset()
