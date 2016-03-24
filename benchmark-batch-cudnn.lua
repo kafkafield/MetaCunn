@@ -3,9 +3,9 @@ require 'sys'
 --require 'ccn2'
 require 'cudnn'
 require 'fbcunn'
+cudnn.benchmark = true -- run manual auto-tuner provided by cudnn
+cudnn.verbose = false
 -- require 'nnbhwd'
-
--- print('Running on device: ' .. cutorch.getDeviceProperties(cutorch.getDevice()).name)
 
 steps = 5 -- nb of steps in loop to average perf
 
