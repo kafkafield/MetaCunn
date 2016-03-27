@@ -200,6 +200,10 @@ end
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
                                         kW, kH, dW, dH,iW,iH,bS)
    parent.__init(self)
+   self.nInputPlane = nInputPlane
+   self.nOutputPlane = nOutputPlane
+   self.kW = kW
+   self.kH = kH
    ni = nInputPlane
    no = nOutputPlane
    kw = kW
