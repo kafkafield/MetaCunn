@@ -343,8 +343,102 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.playOutput = mods[outMod]
    self.playGradInput = mods[gradInputMod]
    self.playGradPara = mods[gradParaMod]
+
+   -- kernel
+   self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
+   self.bias = torch.Tensor(nOutputPlane)
+   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
+   self.gradBias = torch.Tensor(nOutputPlane)
+
+   self:reset()
 end
 
+function SpatialConvolutionMetaHard:reset(stdv)
+   if stdv then
+      stdv = stdv * math.sqrt(3)
+   else
+      stdv = 1/math.sqrt(self.kW*self.kH*self.nInputPlane)
+   end
+   if nn.oldSeed then
+      self.weight:apply(function()
+         return torch.uniform(-stdv, stdv)
+      end)
+      self.bias:apply(function()
+         return torch.uniform(-stdv, stdv)
+      end)
+   else
+      self.weight:uniform(-stdv, stdv)
+      self.bias:uniform(-stdv, stdv)
+   end
+end
+
+function transposeInput(typename, input)
+   if torch.typename(typename) == 'ccn2.SpatialConvolution' then
+      input:transpose(1, 2);
+      input:transpose(3, 2);
+      input:transpose(3, 4);
+   end
+end
+
+function SpatialConvolutionMetaHard:copykernelMtoI(inplem)
+   if torch.typename(typename) == 'ccn2.SpatialConvolution' then
+      inplem.gradWeight = transposeKernel:updateOutput(self.gradWeight)
+      inplem.gradBias:copy(self.gradBias)
+   else
+      inplem.gradWeight:copy(self.gradWeight)
+      inplem.gradBias:copy(self.gradBias)
+   end
+end
+
+function SpatialConvolutionMetaHard:copykernelItoM(inplem)
+   if torch.typename(typename) == 'ccn2.SpatialConvolution' then
+      self.gradWeight = transposeKernel:updateOutput(inplem.gradWeight)
+      self.gradBias:copy(inplem.gradBias)
+   else
+      self.gradWeight:copy(inplem.gradWeight)
+      self.gradBias:copy(inplem.gradBias)
+   end
+end
+
+function SpatialConvolutionMetaHard:updateOutput(input)
+   if torch.typename(self.playOutput) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      out = self.playOutput:updateOutput(input2)
+      --print(input2:size())
+      return transpose2:updateOutput(out)
+   else
+      return self.playOutput:updateOutput(input)
+   end
+end
+
+function SpatialConvolutionMetaHard:updateGradInput(input, gradOutput)
+   if torch.typename(self.playGradInput) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      --print(input2:size())
+      gradOutput2 = transpose2:updateGradInput(input2, gradOutput)
+      gradOutput3 = self.playGradInput:updateGradInput(input2, gradOutput2)
+      gradOutput4 = transpose1:updateGradInput(input2, gradOutput3)
+      --print(gradOutput:size())
+      --print(gradOutput3:size())
+      return gradOutput4
+   else
+      return self.playGradInput:updateGradInput(input, gradOutput)
+   end
+end
+
+function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
+   if torch.typename(self.playGradPara) == 'ccn2.SpatialConvolution' then
+      input2 = transpose1:updateOutput(input)
+      gradOutput2 = transpose2:updateGradInput(input2, gradOutput)
+      self.playGradPara:accGradParameters(input2, gradOutput2)
+   else
+      self.playGradPara:accGradParameters(input, gradOutput)
+   end
+   self:copykernelItoM(self.playGradPara)
+   self:copykernelMtoI(self.playOutput)
+   self:copykernelMtoI(self.playGradInput)
+end
+--[[
 function transposeInput(typename, input)
    if torch.typename(typename) == 'ccn2.SpatialConvolution' then
       input:transpose(1, 2);
@@ -374,5 +468,5 @@ end
 function SpatialConvolutionMetaHard:reset()
    self.play:reset()
 end
-
+]]
 return metaRegression
