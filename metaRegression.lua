@@ -142,6 +142,51 @@ regressall = {
       kh          =-4.794e-02,
       ni          = 7.402e-01,
    },
+   {
+      intercept                              =-78.017823
+      bs                                     = 0.380242
+      bsl160                     =-0.103628
+      ih                                     = 0.449422
+      ih64144  =-0.470662
+      ihh128             =-0.281939
+      ihl80                      =-0.194549
+      no                                     = 0.257135
+      kh                                     = 2.070089
+      khh6                 =-2.115436
+      dhm1                                   =17.363520
+      ni                                     =11.358561
+      nil288                     =-10.342842
+   },
+   {
+      intercept                                  =-243.75475
+      bs                                         = 0.82888
+      ih                                         = 0.72452
+      no                                         = 0.24839
+      kh                                         = 6.64343
+      khl15                  =-6.51113
+      dhm2                                       =57.69283
+      ni                                         =16.08099
+      nil144                       =-13.05797
+      ni144224   = 2.17940
+      ni208272    =-8.60979
+      ni256320    = 3.57849
+      nih320                 =-15.37197
+   },
+   {
+      intercept                           =-1.144e+02
+      bs                                    = 4.273e-01
+      bsh512                   = 2.581e-01
+      ih                                    = 8.356e-01
+      ih64144 =-6.776e-01
+      ihh144            =-5.584e-01
+      no                                    = 3.900e-01
+      noh496                   = 1.044e-01
+      kh                                    =-1.489e-01
+      khl4                    =-3.554e+00
+      dhm2                                  = 2.744e+01
+      nil384                    =-1.539e+01
+      ni                                    = 1.610e+01
+   },
 
 }
 
@@ -208,8 +253,26 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       bsfix128 = (1+(-1)^(math.ceil((bs)%128/128)))/2*bs
       ihl144 = -ih*math.floor((ih-144)/256)
       ihh144 = -ih*math.floor((143-ih)/256)
+      dhm1 = 1/dh
       ihl1442 = ihl144^2
       ihh1442 = ihh144^2
+      bsl160 = (n < 160) and bs or 0
+      ih64144 = (n > 64 and n < 144) and ih or 0
+      ihh128 = (n > 128) and ih or 0
+      ihl80 = (n < 80) and ih or 0
+      khh6 = (kh > 6) and kh or 0
+      nil288 ＝ (ni < 288) and ni or 0
+      khl15 = (kh < 15) and kh or 0
+      nil144 = (ni < 144) and ni or 0
+      ni144224 = (ni > 144 and ni < 224) and ni or 0
+      ni208272 = (ni > 208 and ni < 272) and ni or 0
+      ni256320 = (ni > 256 and ni < 320) and ni or 0
+      nih320 = (ni > 320) and ni or 0
+      bsh512 = (bs >= 512) and bs or 0
+      noh496 = (no > 496) and no or 0
+      khl4 = (kl < 4) and kh or 0
+      nil384 = (ni < 384) and ni or 0
+
 
       timeOut[2] = regressall[1].intercept + regressall[1].bs*bs + regressall[1].ih2 * ih2 + regressall[1].ni * ni + regressall[1].no * no + 
          regressall[1].nofix64 * nofix64 + regressall[1].khlog * khlog + regressall[1].kh * kh + regressall[1].dhm2 * dhm2   
@@ -217,12 +280,23 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          regressall[2].kh3 * kh3 + regressall[2].kh * kh + regressall[2].dhm2 * dhm2
       timeGradPara[2] = regressall[3].intercept + regressall[3].bs*bs + regressall[3].ih2 * ih2 + regressall[3].ni * ni + regressall[3].no3 * no3 + 
          regressall[3].nofix64 * nofix64 + regressall[3].kh3 * kh3 + regressall[3].kh * kh + regressall[3].dhm2 * dhm2
-      timeOut[1] = regressall[4].intercept + regressall[4].bs*bs + regressall[4].ih2 * ih2 + regressall[4].ni * ni + regressall[4].no * no + 
+
+--[[      timeOut[1] = regressall[4].intercept + regressall[4].bs*bs + regressall[4].ih2 * ih2 + regressall[4].ni * ni + regressall[4].no * no + 
          regressall[4].nofix64 * nofix64 + regressall[4].khlog * khlog + regressall[4].kh * kh + regressall[4].dhm2 * dhm2
       timeGradInput[1] = regressall[5].intercept + regressall[5].bs*bs + regressall[5].ih2 * ih2 + regressall[5].ni * ni + regressall[5].no * no + 
          regressall[5].khlog * khlog + regressall[5].kh * kh + regressall[5].dhm2 * dhm2
       timeGradPara[1] = regressall[6].intercept + regressall[6].bs*bs + regressall[6].ih2 * ih2 + regressall[6].ni * ni + regressall[6].no3 * no3 + 
-         regressall[6].nofix128 * nofix128 + regressall[6].khlog * khlog + regressall[6].kh * kh + regressall[6].dhm2 * dhm2
+         regressall[6].nofix128 * nofix128 + regressall[6].khlog * khlog + regressall[6].kh * kh + regressall[6].dhm2 * dhm2]]
+
+      timeOut[1] = regressall[13].intercept + regressall[13].bs*bs + regressall[13].bsl160*bsl160 + regressall[13].ih * ih + regressall[13].ih64144 * ih64144 + regressall[13].ihh128 * ihh128 + 
+         regressall[13].ihl80 * ihl80 + regressall[13].no * no + regressall[13].kh * kh + regressall[13].khh6 * khh6 + regressall[13].dhm1 * dhm1 + regressall[13].ni * ni + regressall[13].nil288 * nil288
+      timeGradInput[1] = regressall[14].intercept + regressall[14].bs*bs + regressall[14].ih * ih + regressall[14].no * no + 
+         regressall[14].khl15 * khl15 + regressall[14].kh * kh + regressall[14].dhm2 * dhm2 + regressall[14].ni * ni + regressall[14].nil144 * nil144 + regressall[14].ni144224 * ni144224 + 
+         regressall[14].ni208272 * ni208272 + regressall[14].ni256320 * ni256320 + regressall[14].nih320 * nih320
+      timeGradPara[1] = regressall[15].intercept + regressall[15].bs*bs + regressall[15].bsh512*bsh512 + regressall[15].ih * ih + regressall[15].ih64144 * ih64144 + regressall[15].ihh144 * ihh144 + 
+         regressall[15].no * no + 
+         regressall[15].noh496 * noh496 + regressall[15].khl4 * khl4 + regressall[15].kh * kh + regressall[15].dhm2 * dhm2 + regressall[15].ni * ni + regressall[15].nil384 * nil384
+
       timeOut[3] = regressall[7].intercept + regressall[7].bs*bs + regressall[7].bsfix128*bsfix128+ regressall[7].bsfix32*bsfix32 + regressall[7].ih2 * ih2 + 
          regressall[7].ni * ni + regressall[7].no * no + regressall[7].khlog * khlog + regressall[7].kh * kh + regressall[7].dhm2 * dhm2
       timeGradInput[3] = regressall[8].intercept + regressall[8].bs*bs + regressall[8].bsfix32*bsfix32 + regressall[8].ih2 * ih2 + 
