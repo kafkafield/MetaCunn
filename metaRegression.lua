@@ -270,7 +270,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       nih320 = (ni > 320) and ni or 0
       bsh512 = (bs >= 512) and bs or 0
       noh496 = (no > 496) and no or 0
-      khl4 = (kl < 4) and kh or 0
+      khl4 = (kh < 4) and kh or 0
       nil384 = (ni < 384) and ni or 0
 
 
