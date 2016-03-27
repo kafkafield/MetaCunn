@@ -341,6 +341,9 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
             gradParaMod = j
          end
       end
+      local log = string.format("%10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f %10.2f\n", timeOut[1]*1000, timeOut[2]*1000, timeOut[3]*1000, timeOut[4]*1000, timeGradInput[1]*1000, 
+         timeGradInput[2]*1000, timeGradInput[3]*1000, timeGradInput[4]*1000, timeGradPara[1]*1000, timeGradPara[2]*1000, timeGradPara[3]*1000, timeGradPara[4]*1000)
+      writefile('metahardtest', log)
       local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d\n", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
       writefile("data", str)
    end
