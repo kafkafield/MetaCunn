@@ -163,7 +163,7 @@ regressall = {
       ih                                         = 0.72452,
       no                                         = 0.24839,
       kh                                         = 6.64343,
-      khl15                  =-6.51113,
+      khh15                  =-6.51113,
       dhm2                                       =57.69283,
       ni                                         =16.08099,
       nil144                       =-13.05797,
@@ -178,7 +178,7 @@ regressall = {
       bsh512                   = 2.581e-01,
       ih                                    = 8.356e-01,
       ih64144 =-6.776e-01,
-      ihh144            =-5.584e-01,
+      ihhh144            =-5.584e-01,
       no                                    = 3.900e-01,
       noh496                   = 1.044e-01,
       kh                                    =-1.489e-01,
@@ -261,21 +261,22 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       ihl1442 = ihl144^2
       ihh1442 = ihh144^2
       bsl160 = (bs < 160) and bs or 0
-      ih64144 = (ih > 64 and ih < 144) and ih or 0
-      ihh128 = (ih > 128) and ih or 0
+      ih64144 = (ih > 64 and ih < 144) and (ih - 64) or 0
+      ihh128 = (ih > 128) and (ih - 128) or 0
       ihl80 = (ih < 80) and ih or 0
-      khh6 = (kh > 6) and kh or 0
+      khh6 = (kh > 6) and (kh - 6) or 0
       nil288 = (ni < 288) and ni or 0
-      khl15 = (kh < 15) and kh or 0
+      khh15 = (kh > 15) and (kh - 15)  or 0
       nil144 = (ni < 144) and ni or 0
-      ni144224 = (ni > 144 and ni < 224) and ni or 0
-      ni208272 = (ni > 208 and ni < 272) and ni or 0
-      ni256320 = (ni > 256 and ni < 320) and ni or 0
-      nih320 = (ni > 320) and ni or 0
+      ni144224 = (ni >= 144 and ni < 224) and (ni - 128) or 0
+      ni208272 = (ni > 208 and ni < 272) and (ni - 208) or 0
+      ni256320 = (ni > 256 and ni < 320) and (ni - 256) or 0
+      nih320 = (ni > 320) and (ni - 304) or 0
       bsh512 = (bs >= 512) and bs or 0
       noh496 = (no > 496) and no or 0
       khl4 = (kh < 4) and kh or 0
       nil384 = (ni < 384) and ni or 0
+      ihhh144 = (ih > 64 and ih < 144) and (ih - 64) or 0
 
 
       timeOut[2] = regressall[1].intercept + regressall[1].bs*bs + regressall[1].ih2 * ih2 + regressall[1].ni * ni + regressall[1].no * no + 
@@ -295,9 +296,9 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       timeOut[1] = regressall[13].intercept + regressall[13].bs*bs + regressall[13].bsl160*bsl160 + regressall[13].ih * ih + regressall[13].ih64144 * ih64144 + regressall[13].ihh128 * ihh128 + 
          regressall[13].ihl80 * ihl80 + regressall[13].no * no + regressall[13].kh * kh + regressall[13].khh6 * khh6 + regressall[13].dhm1 * dhm1 + regressall[13].ni * ni + regressall[13].nil288 * nil288
       timeGradInput[1] = regressall[14].intercept + regressall[14].bs*bs + regressall[14].ih * ih + regressall[14].no * no + 
-         regressall[14].khl15 * khl15 + regressall[14].kh * kh + regressall[14].dhm2 * dhm2 + regressall[14].ni * ni + regressall[14].nil144 * nil144 + regressall[14].ni144224 * ni144224 + 
+         regressall[14].khh15 * khh15 + regressall[14].kh * kh + regressall[14].dhm2 * dhm2 + regressall[14].ni * ni + regressall[14].nil144 * nil144 + regressall[14].ni144224 * ni144224 + 
          regressall[14].ni208272 * ni208272 + regressall[14].ni256320 * ni256320 + regressall[14].nih320 * nih320
-      timeGradPara[1] = regressall[15].intercept + regressall[15].bs*bs + regressall[15].bsh512*bsh512 + regressall[15].ih * ih + regressall[15].ih64144 * ih64144 + regressall[15].ihh144 * ihh144 + 
+      timeGradPara[1] = regressall[15].intercept + regressall[15].bs*bs + regressall[15].bsh512*bsh512 + regressall[15].ih * ih + regressall[15].ih64144 * ih64144 + regressall[15].ihhh144 * ihhh144 + 
          regressall[15].no * no + 
          regressall[15].noh496 * noh496 + regressall[15].khl4 * khl4 + regressall[15].kh * kh + regressall[15].dhm2 * dhm2 + regressall[15].ni * ni + regressall[15].nil384 * nil384
 
