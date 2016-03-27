@@ -276,7 +276,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       noh496 = (no > 496) and no or 0
       khl4 = (kh < 4) and kh or 0
       nil384 = (ni < 384) and ni or 0
-      ihhh144 = (ih > 64 and ih < 144) and (ih - 64) or 0
+      ihhh144 = (ih > 144) and (ih - 144) or 0
 
 
       timeOut[2] = regressall[1].intercept + regressall[1].bs*bs + regressall[1].ih2 * ih2 + regressall[1].ni * ni + regressall[1].no * no + 
