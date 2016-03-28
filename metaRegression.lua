@@ -229,6 +229,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       outMod = outR
       gradInputMod = gradInputR
       gradParaMod = gradParaR
+      --[[
       if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT' then
          mods[4]:cuda()
          i1 = torch.randn(bs, ni, ih, iw):cuda()
@@ -237,6 +238,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
          cutorch.synchronize()
          collectgarbage()
       end
+      ]]
    else
       print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       timeOut = {}
@@ -356,6 +358,32 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.playGradInput = mods[gradInputMod]
    self.playGradPara = mods[gradParaMod]
 
+   -- forward to initialize
+   i1 = torch.randn(bs, ni, ih, iw):cuda()
+   i2 = torch.randn(ni, ih, iw, bs):cuda()
+   collectgarbage()
+   if self.playOutput ~= 'ccn2.SpatialConvolution' then
+      self.playOutput:forward(i1)
+   else
+      self.playOutput:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+   if self.playGradInput ~= 'ccn2.SpatialConvolution' then
+      self.playGradInput:forward(i1)
+   else
+      self.playGradInput:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+   if self.playGradPara ~= 'ccn2.SpatialConvolution' then
+      self.playGradPara:forward(i1)
+   else
+      self.playGradPara:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+
    -- kernel
    self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
    self.bias = torch.Tensor(nOutputPlane)
@@ -446,9 +474,15 @@ function SpatialConvolutionMetaHard:accGradParameters(input, gradOutput)
    else
       self.playGradPara:accGradParameters(input, gradOutput)
    end
-   self:copykernelItoM(self.playGradPara)
-   self:copykernelMtoI(self.playOutput)
-   self:copykernelMtoI(self.playGradInput)
+   if self.playGradPara ~= self.playOutput or self.playGradPara ~= self.playGradInput then
+      self:copykernelItoM(self.playGradPara)
+   end
+   if self.playGradPara ~= self.playOutput then
+      self:copykernelMtoI(self.playOutput)
+   end
+   if self.playGradPara ~= self.playGradInput then
+      self:copykernelMtoI(self.playGradInput)
+   end
 end
 --[[
 function transposeInput(typename, input)
