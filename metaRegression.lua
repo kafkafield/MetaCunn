@@ -14,6 +14,10 @@ require ("metahard")
 
 local SpatialConvolutionMetaHard, parent = torch.class('nn.SpatialConvolutionMetaHard', 'nn.Module')
 
+transpose1 = nn.Transpose({1,2}, {2,3}, {3,4}):cuda()
+transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
+transposeKernel = nn.Transpose({1,2}):cuda()
+
 regressall = {
 
    {
