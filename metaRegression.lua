@@ -354,9 +354,9 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
       local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d\n", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
       writefile("data", str)
    end
-   self.playOutput = mods[outMod]
-   self.playGradInput = mods[gradInputMod]
-   self.playGradPara = mods[gradParaMod]
+   self.playOutput = mods[outMod]:cuda()
+   self.playGradInput = mods[gradInputMod]:cuda()
+   self.playGradPara = mods[gradParaMod]:cuda()
 
    -- forward to initialize
    i1 = torch.randn(bs, ni, ih, iw):cuda()
