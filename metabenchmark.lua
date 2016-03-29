@@ -21,8 +21,8 @@ runs = {
       -- second layer
       ni = 3,
       no = 64,
-      kw = 1,
-      kh = 1,
+      kw = 11,
+      kh = 11,
       iw = 128,
       ih = 128,
       bs = 64,
