@@ -1,4 +1,4 @@
-require 'metaHard'
+require 'metaRegression'
 print('Running on device: ' .. cutorch.getDeviceProperties(cutorch.getDevice()).name)
 
 steps = 10 -- nb of steps in loop to average perf
@@ -8,26 +8,26 @@ runs = {
    {
       -- first layer
       ni = 3,
-      no = 96,
-      kw = 11,
-      kh = 11,
+      no = 64,
+      kw = 1,
+      kh = 1,
       iw = 128,
       ih = 128,
-      bs = 128,
+      bs = 64,
       dw = 1,
       dh = 1,
    },
    {
       -- second layer
-      ni = 64,
-      no = 128,
-      kw = 9,
-      kh = 9,
-      iw = 64,
-      ih = 64,
-      bs = 128,
-      dw = 1,
-      dh = 1,
+      ni = 3,
+      no = 64,
+      kw = 1,
+      kh = 1,
+      iw = 128,
+      ih = 128,
+      bs = 64,
+      dw = 2,
+      dh = 2,
    },
    {
       -- third layer
@@ -37,29 +37,6 @@ runs = {
       kh = 9,
       iw = 32,
       ih = 32,
-      bs = 128,
-      dw = 1,
-      dh = 1,
-   },
-   {
-      -- fourth layer
-      ni = 128,
-      no = 128,
-      kw = 7,
-      kh = 7,
-      iw = 16,
-      ih = 16,
-      bs = 128,
-      dw = 1,
-      dh = 1,
-   },
-   {  -- layers with small inputs/kernels, seen at the lower ends of the network
-      ni = 384,
-      no = 384,
-      kw = 3,
-      kh = 3,
-      iw = 13,
-      ih = 13,
       bs = 128,
       dw = 1,
       dh = 1,
