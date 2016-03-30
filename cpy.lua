@@ -60,10 +60,9 @@ o4 = mods[4]:forward(i1)
 
 o3 = transpose2:updateOutput(o3)
 
-print(o1)
-print(o2)
-print(o3)
-print(o4)
+print(o1-o2)
+print(o1-o3)
+print(o1-o4)
 
 -- here to observe output
 
@@ -86,6 +85,7 @@ mods[2]:accGradParameters(i1, o1)
 mods[3]:accGradParameters(i2, o2)
 mods[4]:accGradParameters(i1, o1)
 
+--[[
 print(gi1)
 print(gi2)
 print(gi3)
@@ -98,5 +98,5 @@ print(mods[1].gradWeight)
 print(mods[2].gradWeight)
 print(mods[3].gradWeight)
 print(mods[4].gradWeight)
-
+]]
 -- here to observe gradWeight, mods[3] need to transpose
