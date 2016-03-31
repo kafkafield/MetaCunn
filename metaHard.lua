@@ -65,7 +65,9 @@ function SpatialConvolutionMetaHard:config(size)
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh) 
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh)
    mods[3] = ccn2.SpatialConvolution(ni,no,kw,dw,0,1,4)
-   mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh)
+   if dh == 1 then
+      mods[4] = nn.SpatialConvolutionCuFFT(ni,no,kw,kh,dw,dh)
+   end
    outR, gradInputR, gradParaR = metahard.loadmap(bs,ni,no,kw,kh,iw,ih,dw,dh)
 
    local outMod, gradInputMod, gradParaMod
