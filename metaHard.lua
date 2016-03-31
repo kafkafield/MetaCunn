@@ -180,7 +180,7 @@ function SpatialConvolutionMetaHard:config(size)
       local str = string.format("%d %d %d %d %d %d %d %d %d %d %d %d\n", bs, ni, no, kw, kh, iw, ih, dw, dh, outMod, gradInputMod, gradParaMod)
       writefile("data", str)
    end
-   self.playOutput = mods[outMod]：cuda()
+   self.playOutput = mods[outMod]:cuda()
    self.playGradInput = mods[gradInputMod]:cuda()
    self.playGradPara = mods[gradParaMod]:cuda()
    self.config = true
