@@ -186,9 +186,9 @@ function SpatialConvolutionMetaHard:config(size)
    self.playGradInput = mods[gradInputMod]:cuda()
    self.playGradPara = mods[gradParaMod]:cuda()
    self.configed = true
-   --print(self.playOutput)
-   --print(self.playGradInput)
-   --print(self.playGradPara)
+   print(self.playOutput)
+   print(self.playGradInput)
+   print(self.playGradPara)
 end
 
 function SpatialConvolutionMetaHard:reset(stdv)
