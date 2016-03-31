@@ -27,21 +27,40 @@ transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
 transposeKernel = nn.Transpose({1,2}):cuda()
 
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
-                                        kW, kH, dW, dH,iW,iH,bS)
+                                        kW, kH, dW, dH, pW=0, pH=0)
    parent.__init(self)
    self.nInputPlane = nInputPlane
    self.nOutputPlane = nOutputPlane
    self.kW = kW
    self.kH = kH
-   ni = nInputPlane
-   no = nOutputPlane
-   kw = kW
-   kh = kH
-   dw = dW
-   dh = dH
-   ih = iH
-   iw = iW
-   bs = bS
+   self.dW = dW
+   self.dH = dH
+   self.pW = pW
+   self.pH = pH
+
+   self.configed = false
+
+   -- kernel
+   self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
+   self.bias = torch.Tensor(nOutputPlane)
+   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
+   self.gradBias = torch.Tensor(nOutputPlane)
+
+   self:reset()
+end
+
+function SpatialConvolutionMetaHard:config(size)
+   ni = self.nInputPlane
+   no = self.nOutputPlane
+   kw = self.kW
+   kh = self.kH
+   dw = self.dW
+   dh = self.dH
+   pW = self.pW
+   pH = self.pH
+   ih = size[3]
+   iw = size[4]
+   bs = size[1]
    mods = {}
    mods[1] = cudnn.SpatialConvolution(ni,no,kw,kh,dw,dh) 
    mods[2] = nn.SpatialConvolutionMM(ni,no,kw,kh,dw,dh)
@@ -164,17 +183,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.playOutput = mods[outMod]
    self.playGradInput = mods[gradInputMod]
    self.playGradPara = mods[gradParaMod]
-   print(self.playOutput)
-   print(self.playGradInput)
-   print(self.playGradPara)
-
-   -- kernel
-   self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
-   self.bias = torch.Tensor(nOutputPlane)
-   self.gradWeight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
-   self.gradBias = torch.Tensor(nOutputPlane)
-
-   self:reset()
+   self.config = true
+   --print(self.playOutput)
+   --print(self.playGradInput)
+   --print(self.playGradPara)
 end
 
 function SpatialConvolutionMetaHard:reset(stdv)
@@ -225,6 +237,9 @@ function SpatialConvolutionMetaHard:copykernelItoM(inplem)
 end
 
 function SpatialConvolutionMetaHard:updateOutput(input)
+   if not self.configed then
+      self:config(input:size()) 
+   end
    if torch.typename(self.playOutput) == 'ccn2.SpatialConvolution' then
       input2 = transpose1:updateOutput(input)
       out = self.playOutput:updateOutput(input2)

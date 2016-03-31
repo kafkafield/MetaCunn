@@ -11,7 +11,7 @@ require 'fbcunn'
 kh = 3
 kw = 3
 ni = 3
-no = 16
+no = 32
 dw = 1
 dh = 1
 ih = 10
@@ -37,12 +37,12 @@ i2 = transpose1:updateOutput(i1)
 
 s = mods[2].weight:storage()
 for i = 1, s:size() do
-	s[i] = s:size() - i
+	s[i] = (s:size() - i) / 1000
 end
 
 mods[1].weight:copy(mods[2].weight)
 mods[4].weight:copy(mods[2].weight)
-mods[1].weight = transpose3:updateOutput(mods[2].weight)
+mods[3].weight = transpose3:updateOutput(mods[2].weight)
 
 s = mods[2].bias:storage()
 for i = 1, s:size() do
@@ -55,10 +55,10 @@ mods[4].bias:copy(mods[2].bias)
 
 o1 = mods[1]:forward(i1)
 o2 = mods[2]:forward(i1)
-o3 = mods[3]:forward(i2)
+o5 = mods[3]:forward(i2)
 o4 = mods[4]:forward(i1)
 
-o3 = transpose2:updateOutput(o3)
+o3 = transpose2:updateOutput(o5)
 
 print(o1-o2)
 print(o1-o3)
@@ -70,20 +70,31 @@ s1 = o1:storage()
 s2 = o2:storage()
 
 for i = 1, s1:size() do
-	s1[i] = 1
+	s1[i] = 1 / 1000
 end
 
 o2 = transpose2:updateGradInput(i2, o1)
 
 gi1 = mods[1]:updateGradInput(i1, o1)
 gi2 = mods[2]:updateGradInput(i1, o1)
-gi3 = mods[3]:updateGradInput(i2, o2)
+gi5 = mods[3]:updateGradInput(i2, o2)
 gi4 = mods[4]:updateGradInput(i1, o1)
+
+gi3 = transpose1:updateGradInput(i1, gi5)
 -- here to observe gradinput
 mods[1]:accGradParameters(i1, o1)
 mods[2]:accGradParameters(i1, o1)
 mods[3]:accGradParameters(i2, o2)
 mods[4]:accGradParameters(i1, o1)
+
+print(gi1-gi2)
+print(gi1-gi3)
+print(gi1-gi4)
+
+gradWeight3 = transpose3:updateOutput(mods[3].gradWeight)
+
+mods[1].gradWeight - mods[2].gradWeight
+mods[1].gradWeight - mods[4].gradWeight
 
 --[[
 print(gi1)
