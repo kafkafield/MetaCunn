@@ -27,7 +27,7 @@ transpose2 = nn.Transpose({4,1},{4,2},{4,3}):cuda()
 transposeKernel = nn.Transpose({1,2}):cuda()
 
 function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
-                                        kW, kH, dW, dH, pW=0, pH=0)
+                                        kW, kH, dW, dH, paW, paH)
    parent.__init(self)
    self.nInputPlane = nInputPlane
    self.nOutputPlane = nOutputPlane
@@ -35,8 +35,8 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.kH = kH
    self.dW = dW
    self.dH = dH
-   self.pW = pW
-   self.pH = pH
+   self.paW = paW or 0
+   self.paH = paH or 0
 
    self.configed = false
 
@@ -56,8 +56,8 @@ function SpatialConvolutionMetaHard:config(size)
    kh = self.kH
    dw = self.dW
    dh = self.dH
-   pW = self.pW
-   pH = self.pH
+   paW = self.paW
+   paH = self.paH
    ih = size[3]
    iw = size[4]
    bs = size[1]
