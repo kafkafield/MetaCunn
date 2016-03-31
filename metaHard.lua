@@ -248,6 +248,7 @@ function SpatialConvolutionMetaHard:updateOutput(input)
       --print(input2:size())
       return transpose2:updateOutput(out)
    else
+      print(input:size())
       return self.playOutput:updateOutput(input)
    end
 end
