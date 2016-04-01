@@ -75,14 +75,6 @@ function SpatialConvolutionMetaHard:config(size)
       outMod = outR
       gradInputMod = gradInputR
       gradParaMod = gradParaR
-      if torch.typename(mods[gradInputMod]) == 'nn.SpatialConvolutionCuFFT' or torch.typename(mods[gradParaMod]) == 'nn.SpatialConvolutionCuFFT' then
-         mods[4]:cuda()
-         i1 = torch.randn(bs, ni, ih, iw):cuda()
-         collectgarbage()
-         mods[4]:forward(i1)
-         cutorch.synchronize()
-         collectgarbage()
-      end
    else
       -- print("Need choice !!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
       timeOut = {}
@@ -185,6 +177,33 @@ function SpatialConvolutionMetaHard:config(size)
    self.playOutput = mods[outMod]:cuda()
    self.playGradInput = mods[gradInputMod]:cuda()
    self.playGradPara = mods[gradParaMod]:cuda()
+
+   -- forward to initialize
+   i1 = torch.randn(bs, ni, ih, iw):cuda()
+   i2 = torch.randn(ni, ih, iw, bs):cuda()
+   collectgarbage()
+   if torch.typename(self.playOutput) ~= 'ccn2.SpatialConvolution' then
+      self.playOutput:forward(i1)
+   else
+      self.playOutput:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+   if torch.typename(self.playGradInput) ~= 'ccn2.SpatialConvolution' then
+      self.playGradInput:forward(i1)
+   else
+      self.playGradInput:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+   if torch.typename(self.playGradPara) ~= 'ccn2.SpatialConvolution' then
+      self.playGradPara:forward(i1)
+   else
+      self.playGradPara:forward(i2)
+   end
+   cutorch.synchronize()
+   collectgarbage()
+
    self.configed = true
    --print(self.playOutput)
    --print(self.playGradInput)
