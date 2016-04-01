@@ -39,6 +39,7 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
    self.paH = paH or 0
 
    self.configed = false
+   self.testConfig = 0
 
    -- kernel
    self.weight = torch.Tensor(nOutputPlane, nInputPlane * kH * kW)
@@ -50,6 +51,10 @@ function SpatialConvolutionMetaHard:__init(nInputPlane, nOutputPlane,
 end
 
 function SpatialConvolutionMetaHard:config(size)
+
+   -- for test
+   self.testConfig = self.testConfig + 1
+
    ni = self.nInputPlane
    no = self.nOutputPlane
    kw = self.kW
