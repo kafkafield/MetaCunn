@@ -3,7 +3,7 @@ require 'sys'
 --require 'ccn2'
 --require 'cudnn'
 require 'fbcunn'
-require 'metaRegression'
+require 'metaHard'
 
 -- print('Running on device: ' .. cutorch.getDeviceProperties(cutorch.getDevice()).name)
 
