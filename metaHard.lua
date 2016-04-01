@@ -186,9 +186,9 @@ function SpatialConvolutionMetaHard:config(size)
    self.playGradInput = mods[gradInputMod]:cuda()
    self.playGradPara = mods[gradParaMod]:cuda()
    self.configed = true
-   print(self.playOutput)
-   print(self.playGradInput)
-   print(self.playGradPara)
+   --print(self.playOutput)
+   --print(self.playGradInput)
+   --print(self.playGradPara)
 end
 
 function SpatialConvolutionMetaHard:reset(stdv)
@@ -245,10 +245,10 @@ function SpatialConvolutionMetaHard:updateOutput(input)
    if torch.typename(self.playOutput) == 'ccn2.SpatialConvolution' then
       input2 = transpose1:updateOutput(input)
       out = self.playOutput:updateOutput(input2)
-      --print(input2:size())
+      --print(input2:size()) 
       return transpose2:updateOutput(out)
    else
-      print(input:size())
+      --print(input:size())
       return self.playOutput:updateOutput(input)
    end
 end
