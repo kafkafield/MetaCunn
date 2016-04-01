@@ -54,6 +54,7 @@ function SpatialConvolutionMetaHard:config(size)
 
    -- for test
    self.testConfig = self.testConfig + 1
+   print(self.testConfig)
 
    ni = self.nInputPlane
    no = self.nOutputPlane
