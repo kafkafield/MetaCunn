@@ -1,0 +1,20 @@
+==9749== NVPROF is profiling process 9749, command: python Corr-conv3-benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 128 x 32 x 32 * ker = 128 x 128 x 9 x 9 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>   56655
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>   73868
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>   32315
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  162839
+
+==9749== Profiling application: python Corr-conv3-benchmark.py
+==9749== Profiling result:
+==9749== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"flop_count_sp","Floating Point Operations(Single Precision)",171859968,171859968,171859968
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",5971968,5971968,5971968
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",10304,10304,10304
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1532805120,1532805120,1532805120
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"flop_count_sp","Floating Point Operations(Single Precision)",1364262912,1364262912,1364262912
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1529044992,1529044992,1529044992

@@ -1,0 +1,38 @@
+==10531== NVPROF is profiling process 10531, command: python fft-conv1-benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> fprop         ==>    3963
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> bprop inputs  ==>    6186
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> bprop weights ==>    3850
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> TOTAL         ==>   14000
+
+==10531== Profiling application: python fft-conv1-benchmark.py
+==10531== Profiling result:
+==10531== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","void spRadix0002A::kernel1Mem<unsigned int, float, fftDirection_t=-1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",1989107712,1989107712,1989107712
+"Tesla K40c (0)","void spRadix0003A::kernel1Mem<unsigned int, float, fftDirection_t=-1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_radix1_t, unsigned int, float>)",4,"flop_count_sp","Floating Point Operations(Single Precision)",3237175296,3237175296,3237175296
+"Tesla K40c (0)","void spVector0064C::kernelMem<unsigned int, float, fftDirection_t=1, unsigned int=16, unsigned int=4, LUT, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",2113929216,2113929216,2113929216
+"Tesla K40c (0)","void fermiPlusCgemmLDS128_batched<bool=0, bool=0, bool=0, bool=0, int=4, int=4, int=4, int=3, int=3>(float2**, float2**, float2**, int, int, int, int, int, int, float2 const *, float2 const *, float2, float2, int)",6,"flop_count_sp","Floating Point Operations(Single Precision)",13127761920,15258163200,14096680960
+"Tesla K40c (0)","void spRadix0128C::kernel1Mem<unsigned int, float, fftDirection_t=1, unsigned int=16, unsigned int=4, L1, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",4190109696,4190109696,4190109696
+"Tesla K40c (0)","get_gpu_ptr_size(int*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",10304,10304,10304
+"Tesla K40c (0)","void spRealComplex::preprocessC2C_kernelMem<unsigned int, float, fftAxii_t=3>(Complex<float>*, float const *, unsigned int, coordDivisors_t<float const *>, coord_t<float const *>, coord_t, float const *, Complex, callback_t)",6,"flop_count_sp","Floating Point Operations(Single Precision)",44605440,1903165440,672432128
+"Tesla K40c (0)","void spRadix0002A::kernel1Tex<unsigned int, float, fftDirection_t=-1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",46619712,46619712,46619712
+"Tesla K40c (0)","void spVector0064C::kernelTex<unsigned int, float, fftDirection_t=-1, unsigned int=16, unsigned int=4, LUT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_t, unsigned int, float>)",6,"flop_count_sp","Floating Point Operations(Single Precision)",49545216,66060288,60555264
+"Tesla K40c (0)","void spRadix0003A::kernel1Tex<unsigned int, float, fftDirection_t=1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",101161728,101161728,101161728
+"Tesla K40c (0)","void spRadix0003A::kernel3Tex<unsigned int, float, fftDirection_t=1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix3_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",21938688,21938688,21938688
+"Tesla K40c (0)","void spVector0064C::kernelMem<unsigned int, float, fftDirection_t=-1, unsigned int=16, unsigned int=4, LUT, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",2113929216,2113929216,2113929216
+"Tesla K40c (0)","void spRadix0003A::kernel1Tex<unsigned int, float, fftDirection_t=-1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",4,"flop_count_sp","Floating Point Operations(Single Precision)",75871296,75871296,75871296
+"Tesla K40c (0)","void spRadix0128C::kernel1Mem<unsigned int, float, fftDirection_t=-1, unsigned int=16, unsigned int=4, L1, ALL, WRITEBACK>(kernel_parameters_t<fft_mem_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",4190109696,4190109696,4190109696
+"Tesla K40c (0)","kernel_Mul_node_f1524bb3d6ca9eb7764cc139ef1e3ac8_0_3(unsigned int, int, int, int, float const *, int, int, int, float const *, int, int, int, float*, int, int, int)",6,"flop_count_sp","Floating Point Operations(Single Precision)",34848,171098112,59141472
+"Tesla K40c (0)","void spVector0064C::kernelTex<unsigned int, float, fftDirection_t=1, unsigned int=16, unsigned int=4, LUT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",49545216,49545216,49545216
+"Tesla K40c (0)","void RADIX_M::radixM_kernel<unsigned int, unsigned int=23, radixM_float>(radix_m_parameters_t<unsigned int, radixM_floatprecision>)",12,"flop_count_sp","Floating Point Operations(Single Precision)",225586944,9625042944,3383804160
+"Tesla K40c (0)","k_copy_4d(int, int, int, int, float const *, int, int, int, int, float*, int, int, int, int)",28,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","kernel_TrueDiv_node_6b09085a223d6288386a6525d5e45be7_0_Ccontiguous(unsigned int, float const *, float const *, float*)",3,"flop_count_sp","Floating Point Operations(Single Precision)",14,14,14
+"Tesla K40c (0)","void spRadix0128C::kernel1Tex<unsigned int, float, fftDirection_t=-1, unsigned int=16, unsigned int=4, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",6,"flop_count_sp","Floating Point Operations(Single Precision)",98205696,130940928,120029184
+"Tesla K40c (0)","void spRealComplex::postprocessC2C_kernelMem<unsigned int, float, fftAxii_t=3>(Complex<float>*, float const *, unsigned int, coordDivisors_t<float const *>, coord_t<float const *>, coord_t, float const *, Complex, callback_t)",12,"flop_count_sp","Floating Point Operations(Single Precision)",52494336,2611445760,850814848
+"Tesla K40c (0)","arange",18,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","void spRadix0128C::kernel1Tex<unsigned int, float, fftDirection_t=1, unsigned int=16, unsigned int=4, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",98205696,98205696,98205696
+"Tesla K40c (0)","void spRadix0002A::kernel1Tex<unsigned int, float, fftDirection_t=1, unsigned int=256, unsigned int=6, CONSTANT, ALL, WRITEBACK>(kernel_parameters_t<fft_tex_radix1_t, unsigned int, float>)",2,"flop_count_sp","Floating Point Operations(Single Precision)",62159616,62159616,62159616

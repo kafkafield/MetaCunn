@@ -1,0 +1,21 @@
+==9548== NVPROF is profiling process 9548, command: python Corr-conv1-benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>   25613
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>   66926
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>   56308
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  148848
+
+==9548== Profiling application: python Corr-conv1-benchmark.py
+==9548== Profiling result:
+==9548== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"flop_count_sp","Floating Point Operations(Single Precision)",9584640,9584640,9584640
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",5054412,5054412,5054412
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",10304,10304,10304
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"flop_count_sp","Floating Point Operations(Single Precision)",512262144,512262144,512262144
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1370112000,1370112000,1370112000
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1319747584,1319747584,1319747584
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_128x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",517570560,517570560,517570560

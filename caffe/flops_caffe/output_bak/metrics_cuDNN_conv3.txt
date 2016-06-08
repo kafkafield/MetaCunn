@@ -1,0 +1,122 @@
+I1229 16:30:04.376212  1059 caffe.cpp:297] Use GPU with device ID 0
+==1059== NVPROF is profiling process 1059, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv3.prototxt --iterations=1 --gpu 0 --logtostderr=1
+I1229 16:30:05.080534  1059 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv3.prototxt
+I1229 16:30:05.080664  1059 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1229 16:30:05.080809  1059 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_128x128x9x9"
+input: "data"
+input_dim: 128
+input_dim: 128
+input_dim: 32
+input_dim: 32
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv3"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 128
+    kernel_size: 9
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1229 16:30:05.080884  1059 net.cpp:435] Input 0 -> data
+I1229 16:30:05.093390  1059 layer_factory.hpp:76] Creating layer conv3
+I1229 16:30:05.093446  1059 net.cpp:110] Creating Layer conv3
+I1229 16:30:05.093463  1059 net.cpp:477] conv3 <- data
+I1229 16:30:05.093487  1059 net.cpp:433] conv3 -> conv3
+I1229 16:30:05.281183  1059 net.cpp:155] Setting up conv3
+I1229 16:30:05.281283  1059 net.cpp:163] Top shape: 128 128 24 24 (9437184)
+I1229 16:30:05.281332  1059 net.cpp:240] conv3 does not need backward computation.
+I1229 16:30:05.281345  1059 net.cpp:283] This network produces output conv3
+I1229 16:30:05.281366  1059 net.cpp:297] Network initialization done.
+I1229 16:30:05.281375  1059 net.cpp:298] Memory required for data: 37748736
+I1229 16:30:05.281419  1059 caffe.cpp:309] Performing Forward
+==1059== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+I1229 16:30:08.806501  1059 caffe.cpp:314] Initial loss: 0
+I1229 16:30:08.806679  1059 caffe.cpp:315] Performing Backward
+I1229 16:30:15.214067  1059 caffe.cpp:323] *** Benchmark begins ***
+I1229 16:30:15.214124  1059 caffe.cpp:324] Testing for 1 iterations.
+I1229 16:30:25.140652  1059 caffe.cpp:352] Iteration: 1 forward-backward time: 9925.88 ms.
+I1229 16:30:25.140756  1059 caffe.cpp:355] Average time per layer: 
+I1229 16:30:25.140780  1059 caffe.cpp:358]      conv3	forward: 3516.34 ms.
+I1229 16:30:25.140794  1059 caffe.cpp:361]      conv3	backward: 6409.44 ms.
+I1229 16:30:25.140820  1059 caffe.cpp:366] Average Forward pass: 3516.37 ms.
+I1229 16:30:25.140833  1059 caffe.cpp:368] Average Backward pass: 6409.47 ms.
+I1229 16:30:25.140848  1059 caffe.cpp:370] Average Forward-Backward: 9926.1 ms.
+I1229 16:30:25.140864  1059 caffe.cpp:372] Total Time: 9926.1 ms.
+I1229 16:30:25.140875  1059 caffe.cpp:373] *** Benchmark ends ***
+==1059== Profiling application: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv3.prototxt --iterations=1 --gpu 0 --logtostderr=1
+==1059== Profiling result:
+==1059== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"achieved_occupancy","Achieved Occupancy",0.727674,0.728981,0.728328
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"ipc","Executed IPC",2.157904,2.162481,2.160192
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"warp_execution_efficiency","Warp Execution Efficiency",78.307292%,78.307292%,78.307292%
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"gld_efficiency","Global Memory Load Efficiency",69.827586%,69.827586%,69.827586%
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"gst_efficiency","Global Memory Store Efficiency",69.827586%,69.827586%,69.827586%
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"achieved_occupancy","Achieved Occupancy",0.374208,0.374236,0.374222
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"ipc","Executed IPC",3.159212,3.160918,3.160065
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"gst_efficiency","Global Memory Store Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=1>*, float const , kernel_grad_params, int, float, int)",2,"shared_efficiency","Shared Memory Efficiency",94.444444%,94.444444%,94.444444%
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"achieved_occupancy","Achieved Occupancy",0.529170,0.529502,0.529336
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"ipc","Executed IPC",0.872391,0.873788,0.873090
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"warp_execution_efficiency","Warp Execution Efficiency",99.946856%,99.946865%,99.946861%
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"gld_efficiency","Global Memory Load Efficiency",99.990507%,99.990507%,99.990507%
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"gst_efficiency","Global Memory Store Efficiency",12.500000%,12.500000%,12.500000%
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"shared_efficiency","Shared Memory Efficiency",11.053241%,11.053241%,11.053241%
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"achieved_occupancy","Achieved Occupancy",0.882255,0.883240,0.882747
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"ipc","Executed IPC",0.985602,0.995063,0.990333
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"warp_execution_efficiency","Warp Execution Efficiency",93.070652%,93.070652%,93.070652%
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"gld_efficiency","Global Memory Load Efficiency",96.166667%,96.166667%,96.166667%
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"gst_efficiency","Global Memory Store Efficiency",97.297297%,97.297297%,97.297297%
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=32, int=1, int=4, int=2, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"achieved_occupancy","Achieved Occupancy",0.374359,0.374846,0.374602
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"ipc","Executed IPC",4.322757,4.325666,4.324212
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"gld_efficiency","Global Memory Load Efficiency",3.125000%,3.125000%,3.125000%
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32",2,"shared_efficiency","Shared Memory Efficiency",150.000000%,150.000000%,150.000000%
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"achieved_occupancy","Achieved Occupancy",0.317117,0.347682,0.332399
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"ipc","Executed IPC",0.628205,0.993371,0.810788
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"warp_execution_efficiency","Warp Execution Efficiency",84.375000%,84.375000%,84.375000%
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"gst_efficiency","Global Memory Store Efficiency",79.411765%,79.411765%,79.411765%
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"achieved_occupancy","Achieved Occupancy",0.015595,0.015625,0.015613
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"ipc","Executed IPC",0.003148,0.005693,0.005040
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"warp_execution_efficiency","Warp Execution Efficiency",2.083333%,4.166667%,3.645833%
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"gst_efficiency","Global Memory Store Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"achieved_occupancy","Achieved Occupancy",0.907398,0.908177,0.907787
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"ipc","Executed IPC",1.877368,1.896973,1.887171
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"achieved_occupancy","Achieved Occupancy",0.370143,0.370198,0.370170
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"ipc","Executed IPC",3.333712,3.334329,3.334020
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"gst_efficiency","Global Memory Store Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16",2,"shared_efficiency","Shared Memory Efficiency",165.271800%,165.271800%,165.271800%

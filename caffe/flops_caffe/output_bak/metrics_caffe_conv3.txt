@@ -1,0 +1,116 @@
+I1229 16:52:42.899868  7961 caffe.cpp:297] Use GPU with device ID 0
+==7961== NVPROF is profiling process 7961, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv3.prototxt --iterations=1 --gpu 0 --logtostderr=1
+I1229 16:52:43.648211  7961 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv3.prototxt
+I1229 16:52:43.648324  7961 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1229 16:52:43.648454  7961 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_128x128x9x9"
+input: "data"
+input_dim: 128
+input_dim: 128
+input_dim: 32
+input_dim: 32
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv3"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv3"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 128
+    kernel_size: 9
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1229 16:52:43.648512  7961 net.cpp:435] Input 0 -> data
+I1229 16:52:43.660614  7961 layer_factory.hpp:76] Creating layer conv3
+I1229 16:52:43.660658  7961 net.cpp:110] Creating Layer conv3
+I1229 16:52:43.660676  7961 net.cpp:477] conv3 <- data
+I1229 16:52:43.660696  7961 net.cpp:433] conv3 -> conv3
+I1229 16:52:43.678825  7961 net.cpp:155] Setting up conv3
+I1229 16:52:43.678875  7961 net.cpp:163] Top shape: 128 128 24 24 (9437184)
+I1229 16:52:43.678908  7961 net.cpp:240] conv3 does not need backward computation.
+I1229 16:52:43.678920  7961 net.cpp:283] This network produces output conv3
+I1229 16:52:43.678936  7961 net.cpp:297] Network initialization done.
+I1229 16:52:43.678944  7961 net.cpp:298] Memory required for data: 37748736
+I1229 16:52:43.678977  7961 caffe.cpp:309] Performing Forward
+==7961== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+I1229 16:53:47.273627  7961 caffe.cpp:314] Initial loss: 0
+I1229 16:53:47.273746  7961 caffe.cpp:315] Performing Backward
+I1229 16:56:02.567415  7961 caffe.cpp:323] *** Benchmark begins ***
+I1229 16:56:02.567481  7961 caffe.cpp:324] Testing for 1 iterations.
+I1229 16:59:19.629781  7961 caffe.cpp:352] Iteration: 1 forward-backward time: 197051 ms.
+I1229 16:59:19.629904  7961 caffe.cpp:355] Average time per layer: 
+I1229 16:59:19.629915  7961 caffe.cpp:358]      conv3	forward: 64228.2 ms.
+I1229 16:59:19.629927  7961 caffe.cpp:361]      conv3	backward: 132823 ms.
+I1229 16:59:19.629956  7961 caffe.cpp:366] Average Forward pass: 64228.2 ms.
+I1229 16:59:19.629969  7961 caffe.cpp:368] Average Backward pass: 132823 ms.
+I1229 16:59:19.629987  7961 caffe.cpp:370] Average Forward-Backward: 197052 ms.
+I1229 16:59:19.630002  7961 caffe.cpp:372] Total Time: 197052 ms.
+I1229 16:59:19.630012  7961 caffe.cpp:373] *** Benchmark ends ***
+==7961== Profiling application: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv3.prototxt --iterations=1 --gpu 0 --logtostderr=1
+==7961== Profiling result:
+==7961== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"achieved_occupancy","Achieved Occupancy",0.519629,0.555259,0.533340
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"ipc","Executed IPC",0.673464,0.898168,0.779786
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"gld_efficiency","Global Memory Load Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"shared_efficiency","Shared Memory Efficiency",50.000000%,50.000000%,50.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"achieved_occupancy","Achieved Occupancy",0.228877,0.238472,0.232695
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"ipc","Executed IPC",2.846669,2.965754,2.909599
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"shared_efficiency","Shared Memory Efficiency",165.738608%,165.738608%,165.738608%
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"achieved_occupancy","Achieved Occupancy",0.541406,0.546529,0.544135
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"ipc","Executed IPC",0.907258,0.918113,0.911896
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"warp_execution_efficiency","Warp Execution Efficiency",71.922750%,71.922750%,71.922750%
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"gld_efficiency","Global Memory Load Efficiency",43.548387%,43.548387%,43.548387%
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"achieved_occupancy","Achieved Occupancy",0.788623,0.843560,0.814137
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"ipc","Executed IPC",1.832110,1.955981,1.886851
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"gld_efficiency","Global Memory Load Efficiency",72.000000%,72.000000%,72.000000%
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"achieved_occupancy","Achieved Occupancy",0.355447,0.357545,0.356446
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"ipc","Executed IPC",3.539715,3.558361,3.550775
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"gld_efficiency","Global Memory Load Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"shared_efficiency","Shared Memory Efficiency",124.982481%,125.001102%,124.991106%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"achieved_occupancy","Achieved Occupancy",0.123998,0.124120,0.124063
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"ipc","Executed IPC",3.133436,3.140550,3.137537
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"shared_efficiency","Shared Memory Efficiency",168.492655%,168.492655%,168.492655%
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"achieved_occupancy","Achieved Occupancy",0.066528,0.066759,0.066636
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"ipc","Executed IPC",0.188614,0.207662,0.198798
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"warp_execution_efficiency","Warp Execution Efficiency",95.095902%,95.095902%,95.095902%
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"gld_efficiency","Global Memory Load Efficiency",96.052632%,96.052632%,96.052632%
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"shared_efficiency","Shared Memory Efficiency",42.282609%,42.282609%,42.282609%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"achieved_occupancy","Achieved Occupancy",0.157863,0.159149,0.158254
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"ipc","Executed IPC",3.353515,3.401665,3.389156
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"shared_efficiency","Shared Memory Efficiency",154.519346%,154.519346%,154.519346%

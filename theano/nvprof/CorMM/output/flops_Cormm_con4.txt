@@ -1,0 +1,20 @@
+==9850== NVPROF is profiling process 9850, command: python Corr-conv4-benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 128 x 16 x 16 * ker = 128 x 128 x 7 x 7 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>    8702
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>    8807
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>    8714
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>   26223
+
+==9850== Profiling application: python Corr-conv4-benchmark.py
+==9850== Profiling result:
+==9850== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","void scal_kernel<float, int=1, bool=1, int=6, int=5, int=5, int=3>(cublasTransposeParams<float>, float const *, float*, float const *)",256,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",627200,627200,627200
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"flop_count_sp","Floating Point Operations(Single Precision)",10304,10304,10304
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",182239232,182239232,182239232
+"Tesla K40c (0)","void sgemm_largek_lds64<bool=0, bool=0, int=5, int=5, int=4, int=4, int=4, int=32>(float*, float const *, float const *, int, int, int, int, int, int, float const *, float const *, float, float, int, int, int*, int*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",205864960,205864960,205864960
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",207929344,207929344,207929344

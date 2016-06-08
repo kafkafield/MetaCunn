@@ -1,0 +1,74 @@
+I1229 14:16:34.360527 24150 caffe.cpp:297] Use GPU with device ID 0
+==24150== NVPROF is profiling process 24150, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv2.prototxt --iterations=1 --gpu 0 --logtostderr=1
+I1229 14:16:35.108774 24150 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv2.prototxt
+I1229 14:16:35.108876 24150 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1229 14:16:35.109009 24150 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_64x128x9x9"
+input: "data"
+input_dim: 128
+input_dim: 64
+input_dim: 64
+input_dim: 64
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv2"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv2"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 128
+    kernel_size: 9
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1229 14:16:35.109066 24150 net.cpp:435] Input 0 -> data
+I1229 14:16:35.121371 24150 layer_factory.hpp:76] Creating layer conv2
+I1229 14:16:35.121420 24150 net.cpp:110] Creating Layer conv2
+I1229 14:16:35.121436 24150 net.cpp:477] conv2 <- data
+I1229 14:16:35.121455 24150 net.cpp:433] conv2 -> conv2
+I1229 14:16:35.300408 24150 net.cpp:155] Setting up conv2
+I1229 14:16:35.300498 24150 net.cpp:163] Top shape: 128 128 56 56 (51380224)
+I1229 14:16:35.300541 24150 net.cpp:240] conv2 does not need backward computation.
+I1229 14:16:35.300556 24150 net.cpp:283] This network produces output conv2
+I1229 14:16:35.300585 24150 net.cpp:297] Network initialization done.
+I1229 14:16:35.300595 24150 net.cpp:298] Memory required for data: 205520896
+I1229 14:16:35.300634 24150 caffe.cpp:309] Performing Forward
+I1229 14:17:45.101188 24150 caffe.cpp:314] Initial loss: 0
+I1229 14:17:45.101265 24150 caffe.cpp:315] Performing Backward
+I1229 14:20:06.439223 24150 caffe.cpp:323] *** Benchmark begins ***
+I1229 14:20:06.439277 24150 caffe.cpp:324] Testing for 1 iterations.
+I1229 14:23:23.599194 24150 caffe.cpp:352] Iteration: 1 forward-backward time: 197147 ms.
+I1229 14:23:23.599284 24150 caffe.cpp:355] Average time per layer: 
+I1229 14:23:23.599298 24150 caffe.cpp:358]      conv2	forward: 71101.5 ms.
+I1229 14:23:23.599309 24150 caffe.cpp:361]      conv2	backward: 126042 ms.
+I1229 14:23:23.599335 24150 caffe.cpp:366] Average Forward pass: 71103.5 ms.
+I1229 14:23:23.599349 24150 caffe.cpp:368] Average Backward pass: 126042 ms.
+I1229 14:23:23.599366 24150 caffe.cpp:370] Average Forward-Backward: 197147 ms.
+I1229 14:23:23.599382 24150 caffe.cpp:372] Total Time: 197147 ms.
+I1229 14:23:23.599395 24150 caffe.cpp:373] *** Benchmark ends ***
+==24150== Profiling application: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv2.prototxt --iterations=1 --gpu 0 --logtostderr=1
+==24150== Profiling result:
+==24150== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float)",2,"flop_count_sp","Floating Point Operations(Single Precision)",663552,663552,663552
+"Tesla K40c (0)","void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int)",2,"flop_count_sp","Floating Point Operations(Single Precision)",51396864,51396864,51396864
+"Tesla K40c (0)","void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int)",2,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","caffe::sync_conv_groups(void)",4,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","void add_tensor_kernel<float, float, int=128, int=1, int=1, int=4, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float)",2,"flop_count_sp","Floating Point Operations(Single Precision)",106938368,106938368,106938368
+"Tesla K40c (0)","void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float)",2,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+==24150== Warning: One or more events or metrics overflowed. Rerun with "--print-gpu-trace" for detail.

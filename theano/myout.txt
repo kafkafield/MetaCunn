@@ -1,0 +1,66 @@
+nohup: ignoring input
+==26166== NVPROF is profiling process 26166, command: python pylearn2_benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+==26166== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>     134
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>     233
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>  329566
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  329933
+
+==26166== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-CorMM-sgemm_sm35_ldg_tn_32x16x64x8x16.nvprof
+==26284== NVPROF is profiling process 26284, command: python pylearn2_benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+==26284== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>  305855
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>     236
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>     278
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  306370
+
+==26284== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-CorMM-sgemm_sm35_ldg_nn_64x16x64x16x16.nvprof
+==26383== NVPROF is profiling process 26383, command: python pylearn2_benchmark.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+==26383== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>  322141
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>     160
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>  199008
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  521309
+
+==26383== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-CorMM-im2col_kernel.nvprof
+==26491== NVPROF is profiling process 26491, command: python pylearn2_benchmark_optimizer.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+==26491== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(experimental) meta-optimizer                      ==> fprop         ==>     136
+(experimental) meta-optimizer                      ==> bprop inputs  ==>     234
+(experimental) meta-optimizer                      ==> bprop weights ==>     266
+(experimental) meta-optimizer                      ==> TOTAL         ==>     637
+
+==26491== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-Meta-Optimizer-sgemm_sm35_ldg_tn_32x16x64x8x16.nvprof
+==26619== NVPROF is profiling process 26619, command: python pylearn2_benchmark_optimizer.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(experimental) meta-optimizer                      ==> fprop         ==>     136
+(experimental) meta-optimizer                      ==> bprop inputs  ==>     201
+(experimental) meta-optimizer                      ==> bprop weights ==>     262
+(experimental) meta-optimizer                      ==> TOTAL         ==>     600
+
+==26619== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-Meta-Optimizer-sgemm_sm_heavy_nn_ldg.nvprof
+==26731== NVPROF is profiling process 26731, command: python pylearn2_benchmark_optimizer.py
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+==26731== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 11 x 11 ( bs = 128 , stride = 1 )
+(experimental) meta-optimizer                      ==> fprop         ==>     135
+(experimental) meta-optimizer                      ==> bprop inputs  ==>     337
+(experimental) meta-optimizer                      ==> bprop weights ==>     265
+(experimental) meta-optimizer                      ==> TOTAL         ==>     738
+
+==26731== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/theano/theano-Meta-Optimizer-sgemm_sm35_ldg_nt_128x16x64x16x16.nvprof

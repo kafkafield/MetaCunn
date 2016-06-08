@@ -1,0 +1,196 @@
+nohup: ignoring input
+I1019 16:19:07.154578  6584 caffe.cpp:297] Use GPU with device ID 0
+==6584== NVPROF is profiling process 6584, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0
+I1019 16:19:07.982607  6584 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv1.prototxt
+I1019 16:19:07.982714  6584 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1019 16:19:07.982848  6584 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_3x96x11x11"
+input: "data"
+input_dim: 128
+input_dim: 3
+input_dim: 128
+input_dim: 128
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 96
+    kernel_size: 11
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1019 16:19:07.982913  6584 net.cpp:435] Input 0 -> data
+I1019 16:19:07.995239  6584 layer_factory.hpp:76] Creating layer conv1
+I1019 16:19:07.995292  6584 net.cpp:110] Creating Layer conv1
+I1019 16:19:07.995311  6584 net.cpp:477] conv1 <- data
+I1019 16:19:07.995332  6584 net.cpp:433] conv1 -> conv1
+I1019 16:19:08.168117  6584 net.cpp:155] Setting up conv1
+I1019 16:19:08.168206  6584 net.cpp:163] Top shape: 128 96 118 118 (171098112)
+I1019 16:19:08.168248  6584 net.cpp:240] conv1 does not need backward computation.
+I1019 16:19:08.168262  6584 net.cpp:283] This network produces output conv1
+I1019 16:19:08.168282  6584 net.cpp:297] Network initialization done.
+I1019 16:19:08.168292  6584 net.cpp:298] Memory required for data: 684392448
+I1019 16:19:08.168331  6584 caffe.cpp:309] Performing Forward
+I1019 16:19:08.257803  6584 caffe.cpp:314] Initial loss: 0
+I1019 16:19:08.257850  6584 caffe.cpp:315] Performing Backward
+==6584== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+I1019 16:20:29.591724  6584 caffe.cpp:323] *** Benchmark begins ***
+I1019 16:20:29.591784  6584 caffe.cpp:324] Testing for 1 iterations.
+I1019 16:21:51.249289  6584 caffe.cpp:352] Iteration: 1 forward-backward time: 81525.3 ms.
+I1019 16:21:51.249389  6584 caffe.cpp:355] Average time per layer: 
+I1019 16:21:51.249403  6584 caffe.cpp:358]      conv1	forward: 91.8149 ms.
+I1019 16:21:51.249415  6584 caffe.cpp:361]      conv1	backward: 81433.4 ms.
+I1019 16:21:51.249440  6584 caffe.cpp:366] Average Forward pass: 91.8353 ms.
+I1019 16:21:51.249457  6584 caffe.cpp:368] Average Backward pass: 81433.4 ms.
+I1019 16:21:51.249475  6584 caffe.cpp:370] Average Forward-Backward: 81525.6 ms.
+I1019 16:21:51.249492  6584 caffe.cpp:372] Total Time: 81525.6 ms.
+I1019 16:21:51.249505  6584 caffe.cpp:373] *** Benchmark ends ***
+==6584== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/caffe/cudnn-wgrad_alg0_engine.nvprof
+I1019 16:21:53.692338  6605 caffe.cpp:297] Use GPU with device ID 0
+==6605== NVPROF is profiling process 6605, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0
+I1019 16:21:54.432195  6605 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv1.prototxt
+I1019 16:21:54.432312  6605 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1019 16:21:54.432449  6605 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_3x96x11x11"
+input: "data"
+input_dim: 128
+input_dim: 3
+input_dim: 128
+input_dim: 128
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 96
+    kernel_size: 11
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1019 16:21:54.432518  6605 net.cpp:435] Input 0 -> data
+I1019 16:21:54.444844  6605 layer_factory.hpp:76] Creating layer conv1
+I1019 16:21:54.444903  6605 net.cpp:110] Creating Layer conv1
+I1019 16:21:54.444921  6605 net.cpp:477] conv1 <- data
+I1019 16:21:54.444941  6605 net.cpp:433] conv1 -> conv1
+I1019 16:21:54.616933  6605 net.cpp:155] Setting up conv1
+I1019 16:21:54.617033  6605 net.cpp:163] Top shape: 128 96 118 118 (171098112)
+I1019 16:21:54.617074  6605 net.cpp:240] conv1 does not need backward computation.
+I1019 16:21:54.617089  6605 net.cpp:283] This network produces output conv1
+I1019 16:21:54.617107  6605 net.cpp:297] Network initialization done.
+I1019 16:21:54.617130  6605 net.cpp:298] Memory required for data: 684392448
+I1019 16:21:54.617172  6605 caffe.cpp:309] Performing Forward
+I1019 16:21:54.707245  6605 caffe.cpp:314] Initial loss: 0
+I1019 16:21:54.707301  6605 caffe.cpp:315] Performing Backward
+==6605== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+I1019 16:22:56.444633  6605 caffe.cpp:323] *** Benchmark begins ***
+I1019 16:22:56.444694  6605 caffe.cpp:324] Testing for 1 iterations.
+I1019 16:23:58.234680  6605 caffe.cpp:352] Iteration: 1 forward-backward time: 61786.3 ms.
+I1019 16:23:58.234817  6605 caffe.cpp:355] Average time per layer: 
+I1019 16:23:58.234839  6605 caffe.cpp:358]      conv1	forward: 93.2908 ms.
+I1019 16:23:58.234860  6605 caffe.cpp:361]      conv1	backward: 61692.9 ms.
+I1019 16:23:58.234905  6605 caffe.cpp:366] Average Forward pass: 93.3115 ms.
+I1019 16:23:58.234930  6605 caffe.cpp:368] Average Backward pass: 61692.9 ms.
+I1019 16:23:58.234959  6605 caffe.cpp:370] Average Forward-Backward: 61786.7 ms.
+I1019 16:23:58.234988  6605 caffe.cpp:372] Total Time: 61786.7 ms.
+I1019 16:23:58.235010  6605 caffe.cpp:373] *** Benchmark ends ***
+==6605== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/caffe/cudnn-cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16.nvprof
+I1019 16:24:00.638118  6666 caffe.cpp:297] Use GPU with device ID 0
+==6666== NVPROF is profiling process 6666, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0
+I1019 16:24:01.265709  6666 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv1.prototxt
+I1019 16:24:01.265810  6666 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1019 16:24:01.265929  6666 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_3x96x11x11"
+input: "data"
+input_dim: 128
+input_dim: 3
+input_dim: 128
+input_dim: 128
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 96
+    kernel_size: 11
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1019 16:24:01.265985  6666 net.cpp:435] Input 0 -> data
+I1019 16:24:01.276243  6666 layer_factory.hpp:76] Creating layer conv1
+I1019 16:24:01.276283  6666 net.cpp:110] Creating Layer conv1
+I1019 16:24:01.276298  6666 net.cpp:477] conv1 <- data
+I1019 16:24:01.276314  6666 net.cpp:433] conv1 -> conv1
+I1019 16:24:01.419421  6666 net.cpp:155] Setting up conv1
+I1019 16:24:01.419495  6666 net.cpp:163] Top shape: 128 96 118 118 (171098112)
+I1019 16:24:01.419530  6666 net.cpp:240] conv1 does not need backward computation.
+I1019 16:24:01.419543  6666 net.cpp:283] This network produces output conv1
+I1019 16:24:01.419559  6666 net.cpp:297] Network initialization done.
+I1019 16:24:01.419569  6666 net.cpp:298] Memory required for data: 684392448
+I1019 16:24:01.419602  6666 caffe.cpp:309] Performing Forward
+==6666== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+I1019 16:25:05.239436  6666 caffe.cpp:314] Initial loss: 0
+I1019 16:25:05.239528  6666 caffe.cpp:315] Performing Backward
+I1019 16:25:05.245172  6666 caffe.cpp:323] *** Benchmark begins ***
+I1019 16:25:05.245200  6666 caffe.cpp:324] Testing for 1 iterations.
+I1019 16:26:10.129732  6666 caffe.cpp:352] Iteration: 1 forward-backward time: 64611.6 ms.
+I1019 16:26:10.129827  6666 caffe.cpp:355] Average time per layer: 
+I1019 16:26:10.129840  6666 caffe.cpp:358]      conv1	forward: 64348.3 ms.
+I1019 16:26:10.129853  6666 caffe.cpp:361]      conv1	backward: 263.256 ms.
+I1019 16:26:10.129878  6666 caffe.cpp:366] Average Forward pass: 64348.3 ms.
+I1019 16:26:10.129896  6666 caffe.cpp:368] Average Backward pass: 263.276 ms.
+I1019 16:26:10.129915  6666 caffe.cpp:370] Average Forward-Backward: 64611.9 ms.
+I1019 16:26:10.129938  6666 caffe.cpp:372] Total Time: 64611.9 ms.
+I1019 16:26:10.129951  6666 caffe.cpp:373] *** Benchmark ends ***
+==6666== Generated result file: /home/jedy/deeplearning/convnet-benchmarks-master/caffe/cudnn-cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32.nvprof

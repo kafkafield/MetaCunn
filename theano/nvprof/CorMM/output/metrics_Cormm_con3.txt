@@ -1,0 +1,56 @@
+==10238== NVPROF is profiling process 10238, command: python Corr-conv3-benchmark.py
+==10238== Some kernel(s) will be replayed on device 0 in order to collect all events/metrics.
+Using gpu device 0: Tesla K40c (CNMeM is disabled)
+
+CONFIG: input = 128 x 32 x 32 * ker = 128 x 128 x 9 x 9 ( bs = 128 , stride = 1 )
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> fprop         ==>   40632
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop inputs  ==>   70451
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> bprop weights ==>   36973
+(manual) theano.sandbox.cuda.blas.GpuCorrMM        ==> TOTAL         ==>  148057
+
+==10238== Profiling application: python Corr-conv3-benchmark.py
+==10238== Profiling result:
+==10238== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"achieved_occupancy","Achieved Occupancy",0.794599,0.836299,0.813474
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"ipc","Executed IPC",1.849744,1.939190,1.896022
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"gld_efficiency","Global Memory Load Efficiency",72.000000%,72.000000%,72.000000%
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","im2col_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, float*)",512,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"achieved_occupancy","Achieved Occupancy",0.228691,0.238541,0.233095
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"ipc","Executed IPC",2.822353,2.959626,2.896117
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"shared_efficiency","Shared Memory Efficiency",165.738608%,165.738608%,165.738608%
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"achieved_occupancy","Achieved Occupancy",0.541473,0.546268,0.544195
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"ipc","Executed IPC",0.909692,0.920348,0.913612
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"warp_execution_efficiency","Warp Execution Efficiency",71.922750%,71.922750%,71.922750%
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"gld_efficiency","Global Memory Load Efficiency",43.548387%,43.548387%,43.548387%
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","col2im_kernel(int, float const *, int, int, int, int, int, int, int, int, int, int, int, float*)",256,"shared_efficiency","Shared Memory Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"achieved_occupancy","Achieved Occupancy",0.117130,0.117130,0.117130
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"ipc","Executed IPC",0.229665,0.229665,0.229665
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"warp_execution_efficiency","Warp Execution Efficiency",99.177632%,99.177632%,99.177632%
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"gld_efficiency","Global Memory Load Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"gst_efficiency","Global Memory Store Efficiency",12.500000%,12.500000%,12.500000%
+"Tesla K40c (0)","kernel_reduce_ccontig_node_4125d49ee4dc48affd03ce6cfd313b31_0(unsigned int, float const *, float*)",1,"shared_efficiency","Shared Memory Efficiency",38.946759%,38.946759%,38.946759%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"achieved_occupancy","Achieved Occupancy",0.123968,0.124122,0.124036
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"ipc","Executed IPC",3.131604,3.143837,3.139473
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"shared_efficiency","Shared Memory Efficiency",168.492655%,168.492655%,168.492655%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"achieved_occupancy","Achieved Occupancy",0.355375,0.358286,0.356439
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"ipc","Executed IPC",3.544566,3.654747,3.553561
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,25.000000%,24.804688%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"gst_efficiency","Global Memory Store Efficiency",25.000000%,25.000000%,25.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"shared_efficiency","Shared Memory Efficiency",124.982576%,125.025501%,124.991141%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"achieved_occupancy","Achieved Occupancy",0.158018,0.158962,0.158183
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"ipc","Executed IPC",3.352974,3.403401,3.390670
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"warp_execution_efficiency","Warp Execution Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"gld_efficiency","Global Memory Load Efficiency",0.000000%,0.000000%,0.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"gst_efficiency","Global Memory Store Efficiency",100.000000%,100.000000%,100.000000%
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"shared_efficiency","Shared Memory Efficiency",154.519346%,154.519346%,154.519346%

@@ -1,0 +1,76 @@
+I1229 13:40:13.982465 16592 caffe.cpp:297] Use GPU with device ID 0
+==16592== NVPROF is profiling process 16592, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0 --logtostderr=1
+I1229 13:40:14.770764 16592 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv1.prototxt
+I1229 13:40:14.770891 16592 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1229 13:40:14.771037 16592 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_3x96x11x11"
+input: "data"
+input_dim: 128
+input_dim: 3
+input_dim: 128
+input_dim: 128
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 96
+    kernel_size: 11
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1229 13:40:14.771111 16592 net.cpp:435] Input 0 -> data
+I1229 13:40:14.783257 16592 layer_factory.hpp:76] Creating layer conv1
+I1229 13:40:14.783310 16592 net.cpp:110] Creating Layer conv1
+I1229 13:40:14.783327 16592 net.cpp:477] conv1 <- data
+I1229 13:40:14.783351 16592 net.cpp:433] conv1 -> conv1
+I1229 13:40:14.785837 16592 net.cpp:155] Setting up conv1
+I1229 13:40:14.785883 16592 net.cpp:163] Top shape: 128 96 118 118 (171098112)
+I1229 13:40:14.785918 16592 net.cpp:240] conv1 does not need backward computation.
+I1229 13:40:14.785930 16592 net.cpp:283] This network produces output conv1
+I1229 13:40:14.785946 16592 net.cpp:297] Network initialization done.
+I1229 13:40:14.785956 16592 net.cpp:298] Memory required for data: 684392448
+I1229 13:40:14.785984 16592 caffe.cpp:309] Performing Forward
+I1229 13:40:42.401695 16592 caffe.cpp:314] Initial loss: 0
+I1229 13:40:42.401772 16592 caffe.cpp:315] Performing Backward
+I1229 13:42:48.663204 16592 caffe.cpp:323] *** Benchmark begins ***
+I1229 13:42:48.663259 16592 caffe.cpp:324] Testing for 1 iterations.
+I1229 13:45:22.596477 16592 caffe.cpp:352] Iteration: 1 forward-backward time: 153925 ms.
+I1229 13:45:22.596573 16592 caffe.cpp:355] Average time per layer: 
+I1229 13:45:22.596588 16592 caffe.cpp:358]      conv1	forward: 27612.2 ms.
+I1229 13:45:22.596601 16592 caffe.cpp:361]      conv1	backward: 126312 ms.
+I1229 13:45:22.596631 16592 caffe.cpp:366] Average Forward pass: 27612.2 ms.
+I1229 13:45:22.596645 16592 caffe.cpp:368] Average Backward pass: 126312 ms.
+I1229 13:45:22.596665 16592 caffe.cpp:370] Average Forward-Backward: 153925 ms.
+I1229 13:45:22.596683 16592 caffe.cpp:372] Total Time: 153925 ms.
+I1229 13:45:22.596694 16592 caffe.cpp:373] *** Benchmark ends ***
+==16592== Profiling application: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0 --logtostderr=1
+==16592== Profiling result:
+==16592== Metric result:
+"Device","Kernel","Invocations","Metric Name","Metric Description","Min","Max","Avg"
+"Tesla K40c (0)","void gemmk1_kernel<float, int=256, int=5, bool=0, bool=0, bool=0, bool=0>(cublasGemmk1Params<float>, float const *, float const *, float*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",4051884,4051884,4051884
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_64x16x128x8x32",256,"flop_count_sp","Floating Point Operations(Single Precision)",9584640,9584640,9584640
+"Tesla K40c (0)","void caffe::col2im_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, int, caffe::col2im_gpu_kernel<float>*)",256,"flop_count_sp","Floating Point Operations(Single Precision)",5054412,5054412,5054412
+"Tesla K40c (0)","void caffe::im2col_gpu_kernel<float>(int, float const *, int, int, int, int, int, int, int, int, int, int, caffe::im2col_gpu_kernel<float>*)",512,"flop_count_sp","Floating Point Operations(Single Precision)",0,0,0
+"Tesla K40c (0)","sgemm_sm35_ldg_tn_32x16x64x8x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1370112000,1370112000,1370112000
+"Tesla K40c (0)","sgemm_sm_heavy_nt_ldg",256,"flop_count_sp","Floating Point Operations(Single Precision)",512262144,512262144,512262144
+"Tesla K40c (0)","void gemv2T_kernel_val<float, int=128, int=16, int=2, int=2, bool=0>(int, int, float, float const *, int, float const *, int, float, float*, int)",256,"flop_count_sp","Floating Point Operations(Single Precision)",2926608,2926608,2926608
+"Tesla K40c (0)","sgemm_sm35_ldg_nn_64x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",1319747584,1319747584,1319747584
+"Tesla K40c (0)","sgemm_sm35_ldg_nt_128x16x64x16x16",256,"flop_count_sp","Floating Point Operations(Single Precision)",517570560,517570560,517570560

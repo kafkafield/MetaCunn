@@ -1,0 +1,7 @@
+
+CONFIG: input = 3 x 128 x 128 * ker = 3 x 96 x 3 x 3 ( bs = 128 , stride = 1 )
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> fprop         ==>   12621
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> bprop inputs  ==>   18720
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> bprop weights ==>   12649
+theano.sandbox.cuda.fftconv.conv2d_fft             ==> TOTAL         ==>   43991
+

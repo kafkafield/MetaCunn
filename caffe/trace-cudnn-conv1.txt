@@ -1,0 +1,102 @@
+I1230 17:32:15.849504  6463 caffe.cpp:297] Use GPU with device ID 0
+==6463== NVPROF is profiling process 6463, command: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0
+I1230 17:32:18.665494  6463 upgrade_proto.cpp:618] Attempting to upgrade input file specified using deprecated V1LayerParameter: proto_forceGradInput/conv1.prototxt
+I1230 17:32:18.665614  6463 upgrade_proto.cpp:626] Successfully upgraded file specified using deprecated V1LayerParameter
+I1230 17:32:18.665741  6463 net.cpp:50] Initializing net from parameters: 
+name: "ConvLayer_3x96x11x11"
+input: "data"
+input_dim: 128
+input_dim: 3
+input_dim: 128
+input_dim: 128
+force_backward: true
+state {
+  phase: TRAIN
+}
+layer {
+  name: "conv1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1"
+  param {
+    lr_mult: 1
+  }
+  param {
+    lr_mult: 2
+  }
+  convolution_param {
+    num_output: 96
+    kernel_size: 11
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+I1230 17:32:18.665796  6463 net.cpp:435] Input 0 -> data
+I1230 17:32:18.681602  6463 layer_factory.hpp:76] Creating layer conv1
+I1230 17:32:18.681646  6463 net.cpp:110] Creating Layer conv1
+I1230 17:32:18.681660  6463 net.cpp:477] conv1 <- data
+I1230 17:32:18.681676  6463 net.cpp:433] conv1 -> conv1
+I1230 17:32:18.911183  6463 net.cpp:155] Setting up conv1
+I1230 17:32:18.911265  6463 net.cpp:163] Top shape: 128 96 118 118 (171098112)
+I1230 17:32:18.911301  6463 net.cpp:240] conv1 does not need backward computation.
+I1230 17:32:18.911314  6463 net.cpp:283] This network produces output conv1
+I1230 17:32:18.911329  6463 net.cpp:297] Network initialization done.
+I1230 17:32:18.911339  6463 net.cpp:298] Memory required for data: 684392448
+I1230 17:32:18.911373  6463 caffe.cpp:309] Performing Forward
+I1230 17:32:18.999934  6463 caffe.cpp:314] Initial loss: 0
+I1230 17:32:18.999976  6463 caffe.cpp:315] Performing Backward
+I1230 17:32:19.001016  6463 caffe.cpp:323] *** Benchmark begins ***
+I1230 17:32:19.001036  6463 caffe.cpp:324] Testing for 1 iterations.
+I1230 17:32:19.639860  6463 caffe.cpp:352] Iteration: 1 forward-backward time: 358.878 ms.
+I1230 17:32:19.639899  6463 caffe.cpp:355] Average time per layer: 
+I1230 17:32:19.639910  6463 caffe.cpp:358]      conv1	forward: 92.1764 ms.
+I1230 17:32:19.639922  6463 caffe.cpp:361]      conv1	backward: 266.632 ms.
+I1230 17:32:19.639946  6463 caffe.cpp:366] Average Forward pass: 92.2032 ms.
+I1230 17:32:19.639961  6463 caffe.cpp:368] Average Backward pass: 266.65 ms.
+I1230 17:32:19.639978  6463 caffe.cpp:370] Average Forward-Backward: 358.971 ms.
+I1230 17:32:19.639997  6463 caffe.cpp:372] Total Time: 358.971 ms.
+I1230 17:32:19.640009  6463 caffe.cpp:373] *** Benchmark ends ***
+==6463== Profiling application: ./caffe/build/tools/caffe time --model=proto_forceGradInput/conv1.prototxt --iterations=1 --gpu 0
+==6463== Profiling result:
+   Start  Duration            Grid Size      Block Size     Regs*    SSMem*    DSMem*      Size  Throughput           Device   Context    Stream  Name
+2.77606s  1.2160us                    -               -         -         -         -      112B  87.838MB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.03987s  1.0880us                    -               -         -         -         -      112B  98.172MB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.04013s     897ns                    -               -         -         -         -      112B  119.08MB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.04045s  1.0880us                    -               -         -         -         -      112B  98.172MB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.04166s  16.385us                    -               -         -         -         -  136.13KB  7.9230GB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.04187s  1.0250us                    -               -         -         -         -  24.000MB   2e+04GB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.04239s  3.4025ms                    -               -         -         -         -  652.69MB  187.33GB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.04580s  2.8490us              (3 1 1)       (121 1 1)        19        0B        0B         -           -   Tesla K40c (0)         1        13  void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int) [612]
+3.04581s  84.104ms          (27848 1 1)        (8 32 1)        79  12.520KB        0B         -           -   Tesla K40c (0)         1        13  cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32 [628]
+3.12992s  3.9040us                    -               -         -         -         -      384B  93.804MB/s   Tesla K40c (0)         1         7  [CUDA memcpy HtoD]
+3.12998s  8.0748ms           (128 96 1)       (128 1 1)        20        0B        0B         -           -   Tesla K40c (0)         1        13  void add_tensor_kernel<float, float, int=128, int=1, int=1, int=4, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float) [641]
+3.13806s  1.6000us              (1 1 1)         (1 1 1)         8        0B        0B         -           -   Tesla K40c (0)         1         7  caffe::sync_conv_groups(void) [644]
+3.13807s     768ns                    -               -         -         -         -  136.13KB  169.04GB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.13809s     768ns                    -               -         -         -         -      384B  476.84MB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.13811s  3.4204ms                    -               -         -         -         -  652.69MB  186.35GB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.14153s  10.093ms             (96 1 1)       (128 1 1)        17      512B        0B         -           -   Tesla K40c (0)         1        13  void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int) [662]
+3.14154s  11.361us             (96 3 1)       (16 16 1)        14        0B        0B         -           -   Tesla K40c (0)         1        22  void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float) [668]
+3.14155s  140.09ms            (6 1 128)        (8 32 1)        86  6.2500KB        0B         -           -   Tesla K40c (0)         1        22  void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=0>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=0>*, float const , kernel_grad_params, int, float, int) [682]
+3.28165s     768ns                    -               -         -         -         -  24.000MB   3e+04GB/s   Tesla K40c (0)         1         7  [CUDA memset]
+3.28179s  224.30us            (128 3 1)       (16 16 1)        20        0B        0B         -           -   Tesla K40c (0)         1        31  void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float) [691]
+3.28202s  128.99ms          (6 218 128)       (16 16 1)        79  8.0195KB        0B         -           -   Tesla K40c (0)         1        31  cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16 [707]
+3.41102s  1.4720us              (1 1 1)         (1 1 1)         8        0B        0B         -           -   Tesla K40c (0)         1         7  caffe::sync_conv_groups(void) [711]
+3.41104s  2.8480us              (3 1 1)       (121 1 1)        19        0B        0B         -           -   Tesla K40c (0)         1        13  void kern_precompute_indices<bool=0>(int*, int, int, int, int, int, int) [734]
+3.41105s  84.093ms          (27848 1 1)        (8 32 1)        79  12.520KB        0B         -           -   Tesla K40c (0)         1        13  cudnn_convolve_precomputed_sgemm_sm35_ldg_nn_64x16x128x8x32 [750]
+3.49515s  8.0606ms           (128 96 1)       (128 1 1)        20        0B        0B         -           -   Tesla K40c (0)         1        13  void add_tensor_kernel<float, float, int=128, int=1, int=1, int=4, int=2>(cudnnTensorStruct, float*, cudnnTensorStruct, float const *, float, float) [760]
+3.50321s  1.4720us              (1 1 1)         (1 1 1)         8        0B        0B         -           -   Tesla K40c (0)         1         7  caffe::sync_conv_groups(void) [763]
+3.50328s  10.177ms             (96 1 1)       (128 1 1)        17      512B        0B         -           -   Tesla K40c (0)         1        13  void calc_bias_diff<int=2, float, float, int=128, int=0>(cudnnTensorStruct, float const *, cudnnTensorStruct, float*, float, float, int) [780]
+3.50330s  11.841us             (96 3 1)       (16 16 1)        14        0B        0B         -           -   Tesla K40c (0)         1        22  void cudnn::detail::scale_filter_kernel<int=16, int=16>(cudnnFilter4dStruct, float*, float) [786]
+3.50331s  141.55ms            (6 1 128)        (8 32 1)        86  6.2500KB        0B         -           -   Tesla K40c (0)         1        22  void cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=0>(int, int, int, float const *, int, cudnn::detail::wgrad_alg0_engine<float, int=128, int=6, int=7, int=3, int=3, int=5, bool=0>*, float const , kernel_grad_params, int, float, int) [800]
+3.63864s  207.60us            (128 3 1)       (16 16 1)        20        0B        0B         -           -   Tesla K40c (0)         1        31  void setTensor4d_kernel<float, float, int=16, int=16>(cudnnTensor4dStruct, float*, float) [806]
+3.63886s  131.03ms          (6 218 128)       (16 16 1)        79  8.0195KB        0B         -           -   Tesla K40c (0)         1        31  cudnn_dgrad_sm35_ldg_nt_64x16x64x16x16 [822]
+3.76989s  1.5360us              (1 1 1)         (1 1 1)         8        0B        0B         -           -   Tesla K40c (0)         1         7  caffe::sync_conv_groups(void) [826]
+
+Regs: Number of registers used per CUDA thread. This number includes registers used internally by the CUDA driver and/or tools and can be more than what the compiler shows.
+SSMem: Static shared memory allocated per CUDA block.
+DSMem: Dynamic shared memory allocated per CUDA block.
